@@ -1,0 +1,29 @@
+!!! 5
+%html( lang="ru ")
+  %head
+    %meta( charset="UTF-8" )
+    %title Вращай, двигай, загибай — практика 3D в Вебе
+    %meta( name="viewport" content="width=1274, user-scalable=no" )
+    %style
+      = include_style 'style'
+      = slides_styles
+  %body
+
+    %header.caption
+      %h1 Вращай, двигай, загибай — практика 3D в Вебе
+      %p Андрей Ситник, Злые марсиане
+
+    - slides.each do |slide|
+      %div.slide{ id: slide.name, class: slide.type }
+        %div
+          %section
+            - if slide.title
+              %header
+                %h2= slide.title
+            = slide.html
+
+    %script
+      = include_js 'jquery'
+      = include_js 'shower'
+      = include_js 'action'
+      = slides_jses
