@@ -13,3 +13,8 @@
 
 @mixin standard-font
   font-family: 'PT Sans', sans-serif
+
+@mixin background-image($path)
+  width: image-width($path)
+  height: image-height($path)
+  background: image($path) no-repeat
