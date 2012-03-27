@@ -114,17 +114,24 @@ class Environment
 
   def image_tag(name, attrs = {})
     attrs[:alt] ||= ''
-    attrs = attrs.map { |k, v| "#{k}=\"#{v}\"" }.join(' ')
-    uri = @current.dirname.join(name)
-    if production?
-      uri = encode_image(uri)
+    uri  = @current.dirname.join(name)
+    type = file_type(uri)
+    if type == 'image/gif'
+      attrs[:class] = (attrs[:class] ? attrs[:class] + ' ' : '') + 'gif'
     end
+    if production?
+      uri = encode_image(uri, type)
+    end
+    attrs = attrs.map { |k, v| "#{k}=\"#{v}\"" }.join(' ')
     "<img src=\"#{ uri }\" #{ attrs } />"
   end
 
-  def encode_image(file)
-    type = `file -ib #{file}`.split(/\s/).first
-    "data:image/png;base64," + Base64.encode64(file.open { |io| io.read })
+  def encode_image(file, type)
+    "data:#{type};base64," + Base64.encode64(file.open { |io| io.read })
+  end
+
+  def file_type(file)
+    `file -ib #{file}`.split(';').first
   end
 
   def cover(name)

@@ -1,3 +1,5 @@
+after = (ms, fn) -> setTimeout(fn, ms)
+
 jQuery ($) ->
 
   # Открываем ссылки в новых вкладках
@@ -48,3 +50,19 @@ jQuery ($) ->
 
   onList ->
     $('body').addClass('enabled3d')
+
+  # Выключаем GIF-анимацию в списке слайдов
+
+  after 500, ->
+    $('img.gif').each ->
+      img    = $(@)
+      canvas = document.createElement('canvas')
+      canvas.width  = @.width
+      canvas.height = @.height
+      canvas.getContext('2d').drawImage(@, 0, 0, canvas.width, canvas.height)
+      clone = $('<img />').
+        attr(class: img.attr('class')).
+        removeClass('gif').addClass('disabled-gif')
+      clone[0].src = canvas.toDataURL('image/gif')
+      clone.insertAfter(@)
+      $('body').addClass('disable-gif')

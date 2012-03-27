@@ -60,8 +60,6 @@ body
   margin: 0 -432px -220px 0
   +transform-origin(0, 0)
   +scale(0.5)
-  *
-    +animation(none !important)
   &:before
     position: absolute
     top: 0
@@ -88,6 +86,14 @@ body
   &:target:after
     text-shadow: rgba(42, 43, 45, 0.6) 0 2px 1px
     color: #4b86c2
+  *
+    +animation(none !important)
+
+.disable-gif .list .slide
+  .gif
+    display: none
+  .disabled-gif
+    display: block
 
 @media all and (max-width: 1304px)
   .list .slide
@@ -131,6 +137,10 @@ body
       font-size: 25px
     &:target
       visibility: visible
+    .gif
+      display: block
+    .disabled-gif
+      display: none
 
 .full .slide.cover
   z-index: 1
