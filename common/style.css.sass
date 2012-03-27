@@ -1,0 +1,151 @@
+@import 'compass/css3'
+@import 'compass/reset'
+@import 'animation'
+
+body
+  counter-reset: paging
+  font: 25px/2 'PT Sans', sans-serif
+
+.slide
+  padding: 71px 120px 0
+  width: 784px
+  height: 505px
+  background: white
+  color: black
+  &:after
+    position: absolute
+    counter-increment: paging
+    content: counter(paging, decimal-leading-zero)
+    line-height: 1
+  h2
+    margin: 0 0 37px
+    color: #666
+    font: bold 50px/50px 'PT Sans Narrow', sans-serif
+
+.slide.cover
+  background: black
+  img.cover
+    position: absolute
+    top: 0
+    left: 0
+    z-index: -1
+    clip: rect(0, 1024px, 586px, 0)
+  h2
+    color: white
+
+.list
+  padding: 80px 0 40px 100px
+  background: #585a5e inline-image("common/linen.png")
+  &:after
+    clear: both
+    display: block
+    content: ''
+
+.list .caption
+  margin: 0 0 50px
+  color: #3c3d40
+  text-shadow: 0 1px 1px #8d8e90
+  h1
+    font: bold 50px/1 'PT Sans Narrow', sans-serif
+  a
+    color: #4b86c2
+    text-shadow: 0 -1px 1px #1f3f60
+    text-decoration: none
+    &:hover
+      color: #5ca4ed
+
+.list .slide
+  position: relative
+  float: left
+  margin: 0 -432px -220px 0
+  +transform-origin(0, 0)
+  +scale(0.5)
+  *
+    +animation(none !important)
+  &:before
+    position: absolute
+    top: 0
+    left: 0
+    z-index: -1
+    width: 512px
+    height: 288px
+    box-shadow: rgba(0, 0, 0, 0.005) 0 0 30px, rgba(42, 43, 45, 0.6) 0 20px 50px
+    border-radius: 2px
+    content: ''
+    +transform-origin(0, 0)
+    +scale(2)
+  &:after
+    bottom: -100px
+    left: 120px
+    color: #3c3d40
+    text-shadow: 0 2px 1px #8d8e90
+    font-weight: bold
+    font-size: 50px
+  &:hover:before
+    box-shadow: rgba(42, 43, 45, 0.3) 0 0 0 10px, rgba(42, 43, 45, 0.6) 0 20px 50px
+  &:target:before
+    box-shadow: #305f8d 0 0 0 1px, #3c7cbd 0 0 0 10px, rgba(42, 43, 45, 0.6) 0 20px 50px
+  &:target:after
+    text-shadow: rgba(42, 43, 45, 0.6) 0 2px 1px
+    color: #4b86c2
+
+@media all and (max-width: 1304px)
+  .list .slide
+    margin: 0 -718px -400px 0
+    +scale(0.25)
+    &:before
+      width: 256px
+      height: 160px
+      +scale(4)
+    &:after
+      bottom: -180px
+      text-shadow: 0 4px 2px #8d8e90
+      font-size: 100px
+    &:target:before
+      box-shadow: #305f8d 0 0 0 1px, #3c7cbd 0 0 0 10px, rgba(42, 43, 45, 0.6) 0 20px 50px
+    &:target:after
+      text-shadow: 0 4px 2px rgba(42, 43, 45, 0.6)
+
+.full
+  position: absolute
+  top: 50%
+  left: 50%
+  overflow: hidden
+  margin: -288px 0 0 -512px
+  width: 1024px
+  height: 576px
+  background: black
+  .caption
+    display: none
+  .slide
+    position: absolute
+    top: 0
+    left: 0
+    visibility: hidden
+    &:after
+      position: absolute
+      left: 120px
+      bottom: 80px
+      color: #ccc
+      line-height: 18px
+      font-size: 25px
+    &:target
+      visibility: visible
+
+.full .slide.cover
+  z-index: 1
+  &:after
+    content: ''
+
+.full .progress
+  position: absolute
+  right: 118px
+  bottom: 40px
+  left: 118px
+  div
+    width: 0
+    height: 10px
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4)
+    border-radius: 5px
+    background: rgba(177, 177, 177, 0.4)
+    +transition(width 200ms linear)

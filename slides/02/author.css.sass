@@ -1,0 +1,35 @@
+@import 'compass/css3'
+
+.slide.slide-author
+  h2
+    position: absolute
+    top: 250px
+    font-size: 65px
+  .contacts
+    position: absolute
+    top: 305px
+    li
+      list-style: none
+      display: inline
+      font-size: 45px
+      padding-right: 34px
+  a
+    color: white
+    text-decoration: none
+    &:hover span
+      text-shadow: white 0 0 3px
+      +box-shadow(white 0 4px 4px -4px, white 0 -4px 4px -4px inset)
+      border-bottom: 3px solid rgba(255, 255, 255, 1)
+
+  .martians
+    position: absolute
+    top: 83px
+    left: 523px
+    font: bold 50px/50px 'PT Sans Narrow', sans-serif
+    .arrow
+      display: inline
+      padding-right: 7px
+    img
+      position: relative
+      top: 15px
+      left: 9px

@@ -7,21 +7,22 @@
     %style
       = include_style 'style'
       = slides_styles
-  %body
+  %body.list
 
     %header.caption
       %h1 Вращай, двигай, загибай — практика 3D в Вебе
-      %p Андрей Ситник, Злые марсиане
+      %p
+        <a href="http://sitnik.ru/">Андрей Ситник</a>,
+        <a href="evilmartians.ru">Злые марсиане</a>
 
-    - slides.each do |slide|
-      %div.slide{ id: slide.name, class: slide.type }
-        %div
-          %section
-            - if slide.title
-              %header
-                %h2= slide.title
-            = slide.html
+    - slides.each_with_index do |slide, i|
+      %section.slide{ id: i + 1, class: "#{slide.type} slide-#{slide.name}" }
+        - if slide.title
+          %h2= slide.title
+        = slide.html
 
+    %style
+      = include_style 'fonts'
     %script
       = include_js 'jquery'
       = include_js 'shower'

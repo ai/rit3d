@@ -1,0 +1,73 @@
+@import 'compass/css3'
+@import 'animation'
+
+$x: 30px
+
+.slide.slide-cover
+  h2
+    position: relative
+    top: 0px
+    left: -50px
+    font-size: 65px
+    line-height: 1.1
+    text-shadow: black 1px 0 1px, black 0 1px 1px, black -1px 0 1px, black 0 -1px 1px
+  .orbit
+    position: absolute
+    top: 320px
+    left: 380px
+    +transform-style(preserve-3d)
+    +rotate3d(1, 0, -0.2, 50deg)
+  .monolith
+    position: absolute
+    width: 4 * $x
+    height: 9 * $x
+    +animation(rotating 6s infinite linear)
+    +rotateY(45deg)
+    +transform-style(preserve-3d)
+    .front, .back, .left, .right, .top, .bottom
+      position: absolute
+      top: 0
+      left: 0
+      background: black
+    .front, .back
+      top: 0
+      width: 100%
+      height: 100%
+    .front
+      +translateZ(0.5 * $x)
+      +animation(lightning 6s infinite linear -2.5s)
+      background: #211817
+    .back
+      +translateZ(-0.5 * $x)
+      +animation(lightning 6s infinite linear 0.5s)
+    .left, .right
+      left: 1.5 * $x
+      width: $x
+      height: 100%
+    .left
+      +transform( rotateY(90deg) translateZ(2 * $x) )
+      +animation(lightning 6s infinite linear -4s)
+    .right
+      +transform( rotateY(90deg) translateZ(-2 * $x) )
+      +animation(lightning 6s infinite linear -1s)
+    .top, .bottom
+      width: 100%
+      height: $x
+    .top
+      +transform( rotateX(90deg) translateZ(0.5 * $x) )
+    .bottom
+      +transform( rotateX(90deg) translateZ(-8.5 * $x) )
+
++keyframes(rotating)
+  from
+    +rotateY(45deg)
+  to
+    +rotateY(405deg)
+
++keyframes(lightning)
+  from
+    background: black
+  50%
+    background: #211817
+  to
+    background: black

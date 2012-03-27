@@ -7,9 +7,11 @@ VENDOR = ROOT.join('vendor')
 
 require 'haml'
 require 'compass'
+require 'animation'
 require 'coffee-script'
 
 Compass.configuration.images_path = ROOT.to_s
+Compass.configuration.fonts_path  = VENDOR.to_s
 
 class Pathname
   def glob(pattern, &block)
@@ -18,15 +20,17 @@ class Pathname
 end
 
 Slide = Struct.new(:name, :title, :type, :html, :file) do
-
   def style
-    file.dirname.join('style.css.sass')
+    file.dirname.join("#{name}.css.sass")
   end
 
   def js
-    file.dirname.join('action.js.coffee')
+    file.dirname.join("#{name}.js.coffee")
   end
 
+  def name
+    file.basename.sub_ext('')
+  end
 end
 
 class Environment
@@ -37,7 +41,7 @@ class Environment
   end
 
   def type(value);  @type = value; end
-  def name(value);  @name = value;  end
+  def name(value);  @name = value; end
   def title(value); @title = value; end
 
   def render(file, &block)
@@ -78,8 +82,9 @@ class Environment
   end
 
   def slide(file)
+    @name = @title = @type = nil
     html = render(file)
-    @name ||= file.basename.sub_ext('').to_s.capitalize
+    html = image_tag(@cover, class: 'cover') + html if @cover
     @slides << Slide.new(@name, @title, @type, html, file)
   end
 
@@ -89,6 +94,17 @@ class Environment
 
   def slides_jses
     slides.map(&:js).reject {|i| !i.exist? }.map {|i| compile(i) }.join("\n")
+  end
+
+  def image_tag(name, attrs = {})
+    attrs[:alt] ||= ''
+    attrs = attrs.map { |k, v| "#{k}=\"#{v}\"" }.join(' ')
+    "<img src=\"#{ @current.dirname.join(name) }\" #{ attrs } />"
+  end
+
+  def cover(name)
+    @type  = 'cover'
+    @cover = name
   end
 end
 
@@ -102,7 +118,7 @@ task :build do |t, args|
   env    = Environment.new
   layout = COMMON.join('layout.html.haml')
 
-  SLIDES.glob('**/*.haml').map { |i| env.slide(i) }
+  SLIDES.glob('**/*.haml').sort.map { |i| env.slide(i) }
   PUBLIC.join('slideshow.html').open('w') { |io| io << env.render(layout) }
 
   print "\n"
@@ -121,7 +137,7 @@ task :watch do
   end
 
   require 'fssm'
-  FSSM.monitor(ROOT, 'slides/**/*') do
+  FSSM.monitor(ROOT, '{slides,common,vendor}/**/*') do
     update { rebuild }
     delete { rebuild }
     create { rebuild }
