@@ -22,7 +22,7 @@ class Pathname
   end
 end
 
-Slide = Struct.new(:name, :title, :type, :html, :file) do
+Slide = Struct.new(:name, :title, :types, :html, :file) do
   def style
     file.dirname.join("#{name}.css.sass")
   end
@@ -43,10 +43,12 @@ class Environment
     @slides     = []
     @production = production
   end
-
-  def type(value);  @type = value; end
   def name(value);  @name = value; end
   def title(value); @title = value; end
+
+  def type(*values)
+    @types += ' ' + values.join(' ')
+  end
 
   def render(file, &block)
     @current = file
@@ -95,10 +97,11 @@ class Environment
   end
 
   def slide(file)
-    @name = @title = @type = @cover = nil
+    @name  = @title = @cover = nil
+    @types = ''
     html = render(file)
     html = image_tag(@cover, class: 'cover') + html if @cover
-    @slides << Slide.new(@name, @title, @type, html, file)
+    @slides << Slide.new(@name, @title, @types, html, file)
   end
 
   def slides_styles
@@ -125,8 +128,8 @@ class Environment
   end
 
   def cover(name)
-    @type  = 'cover'
-    @cover = name
+    @types += ' cover'
+    @cover  = name
   end
 
   def production?

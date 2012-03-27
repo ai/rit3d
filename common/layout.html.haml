@@ -16,7 +16,7 @@
         <a href="evilmartians.ru">Злые марсиане</a>
 
     - slides.each_with_index do |slide, i|
-      %section.slide{ id: i + 1, class: "#{slide.type} slide-#{slide.name}" }
+      %section.slide{ id: i + 1, class: "#{slide.name}-slide#{slide.types}" }
         - if slide.title
           %h2= slide.title
         = slide.html
