@@ -1,4 +1,5 @@
 require 'pathname'
+require 'base64'
 ROOT   = Pathname(__FILE__).dirname
 PUBLIC = ROOT.join('public')
 SLIDES = ROOT.join('slides')
@@ -12,6 +13,8 @@ require 'coffee-script'
 
 Compass.configuration.images_path = ROOT.to_s
 Compass.configuration.fonts_path  = VENDOR.to_s
+Compass.configuration.http_images_path = 'file:///' + ROOT.to_s
+Compass.configuration.http_fonts_path  = 'file:///' + VENDOR.to_s
 
 class Pathname
   def glob(pattern, &block)
@@ -76,9 +79,16 @@ class Environment
 
   def compile(file)
     if file.extname == '.sass'
-      sass = file.read
-      sass = COMMON.join('_base.sass').read + sass
-      Sass::Engine.new(sass, Compass.sass_engine_options).render
+      base = COMMON.join('_base.sass').read
+      if production?
+        sass = base + COMMON.join('_production.sass').read + file.read
+      else
+        sass = base + file.read
+      end
+      opts = Compass.sass_engine_options
+      opts[:line_comments] = false
+      opts[:style] = :nested
+      Sass::Engine.new(sass, opts).render
     elsif file.extname == '.coffee'
       CoffeeScript.compile(file.read)
     end
@@ -102,7 +112,16 @@ class Environment
   def image_tag(name, attrs = {})
     attrs[:alt] ||= ''
     attrs = attrs.map { |k, v| "#{k}=\"#{v}\"" }.join(' ')
-    "<img src=\"#{ @current.dirname.join(name) }\" #{ attrs } />"
+    uri = @current.dirname.join(name)
+    if production?
+      uri = encode_image(uri)
+    end
+    "<img src=\"#{ uri }\" #{ attrs } />"
+  end
+
+  def encode_image(file)
+    type = `file -ib #{file}`.split(/\s/).first
+    "data:image/png;base64," + Base64.encode64(file.open { |io| io.read })
   end
 
   def cover(name)
@@ -122,7 +141,7 @@ task :build do |t, args|
 
   print 'build'
 
-  env    = Environment.new(false)
+  env    = Environment.new(ENV['production'])
   layout = COMMON.join('layout.html.haml')
 
   SLIDES.glob('**/*.haml').sort.map { |i| env.slide(i) }

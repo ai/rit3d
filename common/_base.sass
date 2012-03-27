@@ -1,2 +1,8 @@
 @import 'compass/css3'
 @import 'animation'
+
+@function font($path, $type)
+  @return url("#{ font-url($path, $type) }")
+
+@function image($path)
+  @return image-url($path)
