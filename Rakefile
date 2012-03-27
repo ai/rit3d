@@ -36,8 +36,9 @@ end
 class Environment
   attr_accessor :slides
 
-  def initialize
-    @slides = []
+  def initialize(production)
+    @slides     = []
+    @production = production
   end
 
   def type(value);  @type = value; end
@@ -75,14 +76,16 @@ class Environment
 
   def compile(file)
     if file.extname == '.sass'
-      Sass::Engine.new(file.read, Compass.sass_engine_options).render
+      sass = file.read
+      sass = COMMON.join('_base.sass').read + sass
+      Sass::Engine.new(sass, Compass.sass_engine_options).render
     elsif file.extname == '.coffee'
       CoffeeScript.compile(file.read)
     end
   end
 
   def slide(file)
-    @name = @title = @type = nil
+    @name = @title = @type = @cover = nil
     html = render(file)
     html = image_tag(@cover, class: 'cover') + html if @cover
     @slides << Slide.new(@name, @title, @type, html, file)
@@ -106,6 +109,10 @@ class Environment
     @type  = 'cover'
     @cover = name
   end
+
+  def production?
+    @production
+  end
 end
 
 desc 'Build site files'
@@ -115,7 +122,7 @@ task :build do |t, args|
 
   print 'build'
 
-  env    = Environment.new
+  env    = Environment.new(false)
   layout = COMMON.join('layout.html.haml')
 
   SLIDES.glob('**/*.haml').sort.map { |i| env.slide(i) }
