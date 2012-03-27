@@ -4,7 +4,9 @@
 
 body
   counter-reset: paging
-  font: 25px/2 'PT Sans', sans-serif
+  +standard-font
+  font-size: 30px
+  line-height: 1.4
 
 .slide
   padding: 71px 90px 0 90px
@@ -20,7 +22,9 @@ body
   h2
     margin: 0 0 37px
     color: #666
-    font: bold 50px/50px 'PT Sans Narrow', sans-serif
+    +narrow-font
+    font-size: 50px
+    line-height: 1
 
 .slide.cover
   background: black
@@ -46,7 +50,9 @@ body
   color: #3c3d40
   text-shadow: 0 1px 1px #8d8e90
   h1
-    font: bold 50px/1 'PT Sans Narrow', sans-serif
+    +narrow-font
+    font-size: 50px
+    line-height: 1
   a
     color: #4b86c2
     text-shadow: 0 -1px 1px #1f3f60
