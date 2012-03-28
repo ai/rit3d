@@ -21,6 +21,30 @@ body
     font-size: 50px
     line-height: 1
 
+.slide
+  ol, ul
+    margin: 80px 0 0 0
+    counter-reset: list
+    & > li
+      margin-bottom: 10px
+      position: relative
+    ul, ol
+      margin: 0 0 0 36px
+    & > li:before
+      position: absolute
+      top: -4px
+      left: -117px
+      width: 100px
+      color: #bbb
+      text-align: right
+  ul > li:before
+    content: '\2022'
+    line-height: 48px
+    font-size: 40px
+  ol > li:before
+    counter-increment: list
+    content: counter(list)'.'
+
 .slide.cover
   background: black
   img.cover
@@ -31,6 +55,18 @@ body
     clip: rect(0, 1024px, 586px, 0)
   h2
     color: white
+
+.slide.shout
+  h2
+    position: absolute
+    top: 50%
+    left: 0
+    width: 1024px - 180px
+    text-align: center
+    line-height: 1
+    font-size: 80px
+    +translateY(-50%)
+    padding: 0 90px
 
 .list
   padding: 80px 0 40px 100px
