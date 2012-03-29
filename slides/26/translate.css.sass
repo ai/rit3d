@@ -31,15 +31,9 @@
   .example
     +perspective(4000px)
   .rotator
-    +animation(translate-slide-rotation 8s infinite linear)
+    +animation(rotation 8s infinite linear)
     +transform-style(preserve-3d)
   .translateZ .changed
     +translateZ(50px)
   .translateX .changed
     +translateX(50%)
-
-+keyframes(translate-slide-rotation)
-  from
-    +rotateY(0)
-  to
-    +rotateY(360deg)

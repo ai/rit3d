@@ -25,7 +25,7 @@ $x: 30px
     left: 0
     width: 4 * $x
     height: 9 * $x
-    +animation(rotating 6s infinite linear)
+    +animation(monolith-rotating 6s infinite linear)
     +rotateY(45deg)
     +transform-style(preserve-3d)
     background: transparent
@@ -40,21 +40,21 @@ $x: 30px
       height: 100%
     .front
       +translateZ(0.5 * $x)
-      +animation(lightning 6s infinite linear -2.5s)
+      +animation(monolith-lightning 6s infinite linear -2.5s)
       background: #211817
     .back
       +translateZ(-0.5 * $x)
-      +animation(lightning 6s infinite linear 0.5s)
+      +animation(monolith-lightning 6s infinite linear 0.5s)
     .left, .right
       left: 1.5 * $x
       width: $x
       height: 100%
     .left
       +transform( rotateY(90deg) translateZ(2 * $x) )
-      +animation(lightning 6s infinite linear -4s)
+      +animation(monolith-lightning 6s infinite linear -4s)
     .right
       +transform( rotateY(90deg) translateZ(-2 * $x) )
-      +animation(lightning 6s infinite linear -1s)
+      +animation(monolith-lightning 6s infinite linear -1s)
     .top, .bottom
       width: 100%
       height: $x
@@ -63,13 +63,13 @@ $x: 30px
     .bottom
       +transform( rotateX(90deg) translateZ(-8.5 * $x) )
 
-+keyframes(rotating)
++keyframes(monolith-rotating)
   from
     +rotateY(45deg)
   to
     +rotateY(405deg)
 
-+keyframes(lightning)
++keyframes(monolith-lightning)
   from
     background: black
   50%
