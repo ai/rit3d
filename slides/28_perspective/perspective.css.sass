@@ -1,0 +1,27 @@
+.slide.perspective-slide
+  h2
+    margin-bottom: 70px
+  .perspective
+    position: relative
+    margin-bottom: 70px
+  .example
+    position: absolute
+    left: 600px
+    top: -20px
+  .rotator
+    width: 132px
+    height: 132px
+    div
+      float: left
+      background: #669900
+      width: 43px
+      height: 43px
+      margin: 0 1px 1px 0
+
+.enabled3d .slide.perspective-slide
+  .big
+    +perspective(2000px)
+  .small
+    +perspective(200px)
+  .rotator
+    +rotateY(45deg)
