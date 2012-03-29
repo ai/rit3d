@@ -6,21 +6,29 @@ $x: 30px
     font-size: 65px
     line-height: 1.1
     text-shadow: black 1px 0 1px, black 0 1px 1px, black -1px 0 1px, black 0 -1px 1px
-
-.enabled3d .slide.cover-slide
   .orbit
     position: absolute
     top: 320px
     left: 380px
+  .monolith
+    position: absolute
+    top: -50px
+    left: 0px
+    +background-image("slides/01/monolith.png")
+
+.enabled3d .slide.cover-slide
+  .orbit
     +transform-style(preserve-3d)
     +rotate3d(1, 0, -0.2, 50deg)
   .monolith
-    position: absolute
+    top: 0
+    left: 0
     width: 4 * $x
     height: 9 * $x
     +animation(rotating 6s infinite linear)
     +rotateY(45deg)
     +transform-style(preserve-3d)
+    background: transparent
     .front, .back, .left, .right, .top, .bottom
       position: absolute
       top: 0

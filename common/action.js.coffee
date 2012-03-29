@@ -49,7 +49,7 @@ jQuery ($) ->
       $('body').removeClass('enabled3d')
 
   onList ->
-    $('body').addClass('enabled3d')
+    $('body').removeClass('enabled3d')
 
   # Выключаем GIF-анимацию в списке слайдов
 
@@ -63,6 +63,9 @@ jQuery ($) ->
       clone = $('<img />').
         attr(class: img.attr('class')).
         removeClass('gif').addClass('disabled-gif')
-      clone[0].src = canvas.toDataURL('image/gif')
-      clone.insertAfter(@)
-      $('body').addClass('disable-gif')
+      try
+        clone[0].src = canvas.toDataURL('image/gif')
+        clone.insertAfter(@)
+        $('body').addClass('disable-gif')
+      catch error
+        console.log("Can’t disable GIF-animation in development mode")
