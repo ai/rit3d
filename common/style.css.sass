@@ -55,12 +55,42 @@ body
     content: counter(list)'.'
 
 .slide mark
+  margin: 0 -8px
   padding: 3px 8px
-  +border-radius(8px)
-  background: #fafaa2
+  border-radius: 8px
+  background: rgba(236, 249, 0, 0.37)
   color: black
-.slide ul mark
-  margin-left: -8px
+  font-style: normal
+
+
+.slide pre
+  margin: 0 0 50px
+  counter-reset: code
+  white-space: normal
+  code
+    display: block
+    padding: 0
+    background: none
+    white-space: pre
+    line-height: 50px
+    &:before
+      position: absolute
+      margin: 0 0 0 -110px
+      width: 100px
+      color: #bbb
+      text-align: right
+      counter-increment: code
+      content: counter(code, decimal-leading-zero)'.'
+  .important
+    margin: 0
+    background: #c00
+    color: white
+    font-weight: normal
+  .comment
+    margin: 0
+    padding: 0
+    background: none
+    color: #999
 
 .slide.cover
   background: black
@@ -127,9 +157,12 @@ body
     +transform-origin(0, 0)
     +scale(2)
   &:after
-    bottom: -180px
-    text-shadow: 0 4px 2px #8d8e90
-    font-size: 100px
+    bottom: -85px
+    left: 120px
+    color: #3c3d40
+    text-shadow: 0 2px 1px #8d8e90
+    font-weight: bold
+    font-size: 50px
   &:hover:before
     box-shadow: rgba(42, 43, 45, 0.3) 0 0 0 10px, rgba(42, 43, 45, 0.6) 0 20px 50px
   &:target:before
