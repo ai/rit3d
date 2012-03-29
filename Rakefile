@@ -179,3 +179,13 @@ task :watch do
     create { rebuild }
   end
 end
+
+desc 'Optimize PNGs'
+task :png do
+  ROOT.glob("**/*.png") do |i|
+    sh "pngcrush -rem gAMA -rem cHRM -rem iCCP -rem sRGB #{i} #{i}.optimized"
+    FileUtils.rm i
+    FileUtils.cp "#{i}.optimized", i
+    FileUtils.rm "#{i}.optimized"
+  end
+end
