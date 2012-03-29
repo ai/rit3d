@@ -38,7 +38,6 @@
     position: absolute
     left: 700px
     top: -20px
-    +perspective(150px)
     .rotator
       width: 84px
       height: 84px
@@ -49,6 +48,10 @@
         width: 27px
         height: 27px
         margin: 0 1px 1px 0
+
+.enabled3d .slide.rotate-slide.current
+  .example
+    +perspective(150px)
     &.rotatex .rotator
       +rotateX(55deg)
     &.rotatey .rotator
