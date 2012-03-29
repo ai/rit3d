@@ -1,0 +1,18 @@
+- title 'Видимость обратной стороны'
+- type  'use3d'
+
+.example
+  .perspective
+    .rotator
+      .img
+      - 9.times do
+        %div
+  %code backface-visibility: visible
+
+.example
+  .perspective
+    .rotator.hidden
+      .img
+      - 9.times do
+        %div
+  %code backface-visibility: hidden

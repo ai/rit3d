@@ -1,0 +1,33 @@
+.slide.backface-slide
+  h2
+    margin-bottom: 90px
+  .example
+    position: relative
+    margin-bottom: 120px
+  .perspective
+    position: absolute
+    left: 600px
+    top: -40px
+  .rotator
+    width: 132px
+    height: 132px
+    div
+      float: left
+      background: #669900
+      width: 43px
+      height: 43px
+      margin: 0 1px 1px 0
+    .img
+      float: none
+      position: absolute
+      top: 24px
+      left: 5px
+      +background-image("slides/27_backface/gipno.png")
+
+.enabled3d .slide.backface-slide
+  .perspective
+    +perspective(4000px)
+  .rotator
+    +animation(rotation 4s infinite linear)
+    &.hidden
+      +backface-visibility(hidden)
