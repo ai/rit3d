@@ -155,7 +155,7 @@ task :build do |t, args|
   layout = COMMON.join('layout.html.haml')
 
   SLIDES.glob('**/*.haml').sort.map { |i| env.slide(i) }
-  PUBLIC.join('slideshow.html').open('w') { |io| io << env.render(layout) }
+  PUBLIC.join('presentation.html').open('w') { |io| io << env.render(layout) }
 
   print "\n"
 end

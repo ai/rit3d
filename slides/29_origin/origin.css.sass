@@ -1,0 +1,62 @@
+.slide.origin-slide
+  .cube
+    position: absolute
+    width: 200px
+    height: 200px
+    top: 50%
+    left: 50%
+    margin: -100px 0 0 -100px
+  .top, .left, .right, .back, .bottom
+    top: 0
+    left: 0
+    position: absolute
+    width: 196px
+    height: 196px
+    border: 2px solid #669900
+    background: rgba(102, 153, 0, 0.2)
+  .left, .right, .bottom, .back
+    display: none
+  .code
+    margin-top: 325px
+    text-align: center
+    mark
+      display: inline-block
+      width: 214px - 16px
+
+.enabled3d .slide.origin-slide
+  .cube
+    +transform-style(preserve-3d)
+    +perspective(200px)
+    +perspective-origin(50% 50%)
+    +animation(slide-origin-perspective 4s infinite linear)
+  .top, .left, .right, .bottom, .back
+    display: block
+  .back
+    top: 0
+    left: 0
+    width: 196px
+    height: 196px
+    border-width: 2px
+    +translateZ(-200px)
+  .left
+    left: -100px
+    +transform(rotateY(90deg) translateX(100px))
+  .right
+    left: 100px
+    +transform(rotateY(90deg) translateX(100px))
+  .top
+    top: -100px
+    +transform(rotateX(90deg) translateY(-100px))
+  .bottom
+    top: 100px
+    +transform(rotateX(90deg) translateY(-100px))
+
++keyframes(slide-origin-perspective)
+  from
+    +perspective-origin(50% 50%)
+  25%
+    +perspective-origin(75% 75%)
+  75%
+    +perspective-origin(25% 25%)
+  to
+    +perspective-origin(50% 50%)

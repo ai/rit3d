@@ -1,5 +1,29 @@
 after = (ms, fn) -> setTimeout(fn, ms)
 
+# Удобства для написания скриптов слайдов
+
+window.presentation =
+  slide: (name, callback) ->
+    jQuery ->
+      slide = $(".slide.#{name}-slide")
+
+      slide.open = (openCallback) ->
+        presentation.onSlide (s) ->
+          openCallback() if s.hasClass("#{name}-slide")
+      slide.close = (closeCallback) ->
+        presentation.onList(closeCallback)
+        presentation.onSlide (s) ->
+          closeCallback() unless s.hasClass("#{name}-slide")
+
+      finder = (selector) -> $(selector, slide)
+      callback($, finder, slide)
+
+  prefix: ->
+    return 'moz'    if $.browser.mozilla
+    return 'webkit' if $.browser.webkit
+    return 'o'      if $.browser.opera
+    return 'ms'     if $.browser.msie
+
 jQuery ($) ->
 
   # Открываем ссылки в новых вкладках
@@ -35,20 +59,20 @@ jQuery ($) ->
   $(window).on('popstate',   urlChanged)
   $(window).on('hashchange', urlChanged)
 
-  onSlide  = (callback) -> slideCallbacks.add(callback)
-  onList   = (callback) ->  listCallbacks.add(callback)
+  presentation.onSlide = (callback) -> slideCallbacks.add(callback)
+  presentation.onList  = (callback) ->  listCallbacks.add(callback)
 
   # Включение/выключение 3D-режима
 
   mode3d = false
 
-  onSlide (slide) ->
+  presentation.onSlide (slide) ->
     if slide.hasClass('use3d')
       $('body').addClass('enabled3d')
     else
       $('body').removeClass('enabled3d')
 
-  onList ->
+  presentation.onList ->
     $('body').removeClass('enabled3d')
 
   # Выключаем GIF-анимацию в списке слайдов
