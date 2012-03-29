@@ -1,0 +1,35 @@
+- title 'Вращение'
+- type  'use3d'
+
+.rotation
+  %code
+    <span>transform:</span> rotateX(45deg)
+  .example.rotatex
+    .rotator
+      - 9.times do
+        %div
+
+.rotation
+  %code
+    <span>transform:</span> rotateY(45deg)
+  .example.rotatey
+    .rotator
+      - 9.times do
+        %div
+
+.rotation
+  %code
+    <span>transform:</span> rotate3d(<span class="x">2</span>, <span class="y">4</span>, <span class="z">1</span>, 30deg)
+  .label.x x
+  .label.y y
+  .label.z z
+  .angle.x 30<span>deg</span>
+  .angle.y 30<span>deg</span>
+  .angle.z 30<span>deg</span>
+  .mult.x ×
+  .mult.y ×
+  .mult.z ×
+  .example.rotate3d
+    .rotator
+      - 9.times do
+        %div

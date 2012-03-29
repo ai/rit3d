@@ -1,0 +1,57 @@
+.slide.rotate-slide
+  h2
+    margin-bottom: 60px
+  .rotation
+    position: relative
+    margin-bottom: 75px
+  code
+    span
+      color: #999
+  .x
+    color: #0099cc
+  .y
+    color: #9933cc
+  .z
+    color: #cc0000
+  .label
+    top: -38px
+  .angle
+    top: 40px
+    margin-right: -16px
+    span
+      font-size: 10px
+  .mult
+    top: 24px
+    color: #aaa
+    font-size: 25px
+  .label, .angle
+    opacity: 0.4
+  .label, .angle, .mult
+    position: absolute
+    &.x
+      right: 459px
+    &.y
+      right: 404px
+    &.z
+      right: 352px
+  .example
+    position: absolute
+    left: 700px
+    top: -20px
+    +perspective(150px)
+    .rotator
+      width: 84px
+      height: 84px
+      position: relative
+      div
+        float: left
+        background: #669900
+        width: 27px
+        height: 27px
+        margin: 0 1px 1px 0
+    &.rotatex .rotator
+      +rotateX(55deg)
+    &.rotatey .rotator
+      +rotateY(55deg)
+    &.rotate3d .rotator
+      +rotate3d(4, 2, 1, 40deg)
