@@ -14,6 +14,11 @@ body
   height: 576px - 71px
   background: white
   color: black
+  &:after
+    position: absolute
+    counter-increment: paging
+    content: counter(paging, decimal-leading-zero)
+    line-height: 1
   h2
     margin: 0 0 37px
     color: #666
@@ -121,6 +126,10 @@ body
     content: ''
     +transform-origin(0, 0)
     +scale(2)
+  &:after
+    bottom: -180px
+    text-shadow: 0 4px 2px #8d8e90
+    font-size: 100px
   &:hover:before
     box-shadow: rgba(42, 43, 45, 0.3) 0 0 0 10px, rgba(42, 43, 45, 0.6) 0 20px 50px
   &:target:before
@@ -166,6 +175,14 @@ body
     top: 0
     left: 0
     visibility: hidden
+    &:after
+      position: absolute
+      left: 52px
+      bottom: 15px
+      color: #aaa
+      opacity: 0.5
+      line-height: 18px
+      font-size: 25px
     &:target
       visibility: visible
     .gif
@@ -175,3 +192,17 @@ body
 
 .full .slide.cover
   z-index: 1
+  &:after
+    visibility: hidden
+
+.full .progress
+  position: absolute
+  right: 90px
+  bottom: 19px
+  left: 90px
+  div
+    width: 0
+    height: 9px
+    border-radius: 4px
+    background: rgba(177, 177, 177, 0.4)
+    +transition(width 200ms linear)
