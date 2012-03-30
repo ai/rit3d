@@ -1,0 +1,33 @@
+- title 'Боремся с префиксами — Sass и Compass'
+
+%pre.sass
+  %code
+    \.task
+  %code
+    \  +rotateY(180deg)
+  %code
+    \  +transition(all 1s)
+
+%pre.css
+  %code
+    \.task {
+  %code
+    \  -webkit-transform: rotateY(180deg);
+  %code
+    \  -moz-transform: rotateY(180deg);
+  %code
+    \  -ms-transform: rotateY(180deg);
+  %code
+    \  -o-transform: rotateY(180deg);
+  %code
+    \  transform: rotateY(180deg);
+  %code
+    \  -webkit-transition: all 1s;
+  %code
+    \  -moz-transition: all 1s;
+  %code
+    \  -ms-transition: all 1s;
+  %code
+    \  -o-transition: all 1s;
+  %code
+    \  transition: all 1s;
