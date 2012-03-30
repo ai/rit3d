@@ -4,9 +4,29 @@
     position: absolute
     top: 353px
     left: 459px
+  .task, .task .hal9000, .task .love
+    &:before
+      position: absolute
+      top: 5px
+      left: 10px
+      font-size: 20px
+      color: #666
+      +standard-font
   .task
-    margin: 51px 0 0 154px
+    margin: 11px 0 0 0
+    padding: 20px 0 20px 154px
+    position: relative
+    border: 1px solid #ddd
+    display: inline-block
+    width: 791px - 154px
+    &:before
+      content: '.task'
     .hal9000, .love
       float: left
+      position: relative
+    .hal9000:before
+      content: '.hal9000'
     .love
       margin-left: 90px
+      &:before
+        content: '.love'
