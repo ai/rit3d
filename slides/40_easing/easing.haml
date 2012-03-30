@@ -1,0 +1,15 @@
+- title 'Шаг 6. Easing-функция'
+
+%ol
+  %li
+    Выбираем нужный ход анимации на
+    %a( href="http://easings.net" ) easings.net
+  %li
+    Ставим расширение
+    %a( href="http://thesassway.com/projects/compass-ceaser" ) Compass Ceaser
+    или прописываем ход анимации через
+    кривую Безье
+  %li
+    Обновляем transition-свойство:
+    %code
+      +transition(all 1s <mark>ceaser('easeInOutBack')</mark>)

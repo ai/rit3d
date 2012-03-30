@@ -9,6 +9,7 @@ VENDOR = ROOT.join('vendor')
 require 'haml'
 require 'compass'
 require 'animation'
+require 'ceaser-easing'
 require 'coffee-script'
 
 Compass.configuration.images_path = ROOT.to_s

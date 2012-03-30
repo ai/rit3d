@@ -1,0 +1,41 @@
+.slide.compare-slide
+  .hoverer
+    width: 600px
+    height: 300px
+  p, .task
+    position: absolute
+  p
+    top: 202px
+  .task
+    top: 262px
+    .love
+      display: none
+  .cool
+    left: 400px
+
+.enabled3d .slide.compare-slide
+  .task
+    +perspective(500px)
+    width: 190px
+    height: 190px
+    .hal9000, .love
+      position: absolute
+      top: 0
+      left: 0
+      +backface-visibility(hidden)
+      +transition(all 1.4s linear)
+    .love
+      display: block
+      +rotateY(-180deg)
+  .hoverer:hover .task
+    .hal9000
+      +rotateY(180deg)
+    .love
+      +rotateY(0)
+  .task.cool
+    .hal9000, .love
+      +transition(all 1.4s ceaser('easeInOutBack'))
+  .hoverer:hover .task.cool .hal9000, .task.cool .love
+    background-color: #bbb
+  .task.cool .hal9000, .hoverer:hover .task.cool .love
+    background-color: white
