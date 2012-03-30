@@ -1,0 +1,14 @@
+- title 'Определяем поддержку 3D'
+
+%p
+  Поддержка 3D зависит не только от браузера, но и от видеокарты →
+  используйте
+  %a( href="http://modernizr.com/" ) Modernizr
+
+%pre
+  %code
+    \<mark>.csstransforms3d</mark> .task { … }
+
+%pre
+  %code
+    if ( Modernizr.<mark>csstransforms3d</mark> ) { … }
