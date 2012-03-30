@@ -1,0 +1,27 @@
+.slide.animation3d-slide
+  .task
+    position: absolute
+    top: 215px
+    right: 90px
+    .love
+      display: none
+
+.enabled3d .slide.animation3d-slide
+  .task
+    +perspective(500px)
+    width: 190px
+    height: 190px
+    .hal9000, .love
+      position: absolute
+      top: 0
+      left: 0
+      +backface-visibility(hidden)
+      +transition(all 800ms linear)
+    .love
+      display: block
+      +rotateY(-180deg)
+    &:hover
+      .hal9000
+        +rotateY(180deg)
+      .love
+        +rotateY(0)

@@ -1,0 +1,29 @@
+.slide.states-slide
+  h2
+    margin-bottom: 51px
+  pre
+    font-size: 25px
+  code
+    line-height: 40px
+  .task
+    position: absolute
+    top: 180px
+    right: 90px
+    .love
+      display: none
+
+.enabled3d .slide.states-slide
+  .task
+    .hal9000, .love
+      position: absolute
+      top: 0
+      left: 0
+      +backface-visibility(hidden)
+    .love
+      display: block
+      +rotateY(-180deg)
+    &:hover
+      .hal9000
+        +rotateY(180deg)
+      .love
+        +rotateY(0)

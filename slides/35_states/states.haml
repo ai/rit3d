@@ -1,0 +1,26 @@
+- title 'Шаг 3. Устанавливаем состояния'
+- type  'use3d'
+
+%pre
+  %code
+    \.task .hal9000, .task .love
+  %code
+    \  +backface-visibility(hidden)
+  %code
+    \.task .love
+  %code
+    \  +rotateY(180deg)
+  %code
+    \.task<mark>:hover</mark> .hal9000
+  %code
+    \  +rotateY(-180deg)
+  %code
+    \.task<mark>:hover</mark> .love
+  %code
+    \  +rotateY(0)
+
+.task
+  .hal9000
+  .love
+    %em HAL 9000
+    любит всех
