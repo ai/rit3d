@@ -1,0 +1,22 @@
+.slide.end-slide
+  h2
+    font-size: 65px
+    +text-stripping(black)
+  .download
+    position: absolute
+    bottom: 10px
+    left: 65px
+    text-align: center
+    a
+      color: white
+      text-decoration: none
+      +text-stripping(black)
+    .qr
+      margin-top: -30px
+      +background-image("slides/49_end/qr.png")
+      +scale(0.7)
+  .logo
+    position: absolute
+    bottom: 35px
+    right: 35px
+    +background-image("slides/49_end/logo.png")
