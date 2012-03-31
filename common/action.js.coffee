@@ -14,6 +14,11 @@ window.presentation =
         presentation.onList(closeCallback)
         presentation.onSlide (s) ->
           closeCallback() unless s.hasClass("#{name}-slide")
+      slide.every = (ms, fn) ->
+        slide.open ->
+          slide.watcher = setInterval(fn, 100)
+        slide.close ->
+          clearInterval(slide.watcher) if slide.watcher
 
       finder = (selector) -> $(selector, slide)
       callback($, finder, slide)

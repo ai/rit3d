@@ -3,11 +3,6 @@ presentation.slide 'origin', ($, $$, slide) ->
   cube     = $$('.cube')
   prop     = "-#{presentation.prefix()}-perspective-origin"
   example  = $$('mark')
-  watch    = ->
+
+  slide.every 100, ->
     example.text(cube.css(prop))
-
-  slide.open ->
-    watching = setInterval(watch, 100)
-
-  slide.close ->
-    clearInterval(watching) if watching
