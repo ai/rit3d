@@ -202,6 +202,7 @@ task :build do |t, args|
   end
 
   if env.standalone?
+    `zip -j public/rit3d.zip public/rit3d.html`
   end
 
   print "\n"
