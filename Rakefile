@@ -40,9 +40,9 @@ end
 class Environment
   attr_accessor :slides
 
-  def initialize(production)
+  def initialize(build_type)
     @slides     = []
-    @production = production
+    @build_type = build_type
   end
   def name(value);  @name = value; end
   def title(value); @title = value; end
@@ -83,8 +83,8 @@ class Environment
   def compile(file)
     if file.extname == '.sass'
       base = COMMON.join('_base.sass').read
-      if production?
-        sass = base + COMMON.join('_production.sass').read + file.read
+      if standalone?
+        sass = base + COMMON.join('_standalone.sass').read + file.read
       else
         sass = base + file.read
       end
@@ -120,7 +120,7 @@ class Environment
     if type == 'image/gif'
       attrs[:class] = (attrs[:class] ? attrs[:class] + ' ' : '') + 'gif'
     end
-    if production?
+    if standalone?
       uri = encode_image(uri, type)
     end
     attrs = attrs.map { |k, v| "#{k}=\"#{v}\"" }.join(' ')
@@ -140,8 +140,8 @@ class Environment
     @cover  = name
   end
 
-  def production?
-    @production
+  def standalone?
+    @build_type == 'standalone'
   end
 end
 
@@ -152,7 +152,7 @@ task :build do |t, args|
 
   print 'build'
 
-  env    = Environment.new(ENV['production'])
+  env    = Environment.new(ENV['build'] || 'development')
   layout = COMMON.join('layout.html.haml')
 
   SLIDES.glob('**/*.haml').sort.map { |i| env.slide(i) }
