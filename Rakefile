@@ -260,3 +260,11 @@ task :png do
     FileUtils.rm "#{i}.optimized"
   end
 end
+
+desc 'Run webserver'
+task :web do
+  require 'webrick'
+  server = WEBrick::HTTPServer.new(Port: 3000, DocumentRoot: PUBLIC)
+  trap('INT') { server.shutdown }
+  server.start
+end
