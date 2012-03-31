@@ -12,10 +12,9 @@ require 'animation'
 require 'ceaser-easing'
 require 'coffee-script'
 
-Compass.configuration.images_path = ROOT.to_s
-Compass.configuration.fonts_path  = VENDOR.to_s
-Compass.configuration.http_images_path = 'file:///' + ROOT.to_s
-Compass.configuration.http_fonts_path  = 'file:///' + VENDOR.to_s
+Compass.configuration.images_path     = ROOT.to_s
+Compass.configuration.fonts_path      = VENDOR.to_s
+Compass.configuration.http_fonts_path = 'file:///' + VENDOR.to_s
 
 class Pathname
   def glob(pattern, &block)
@@ -43,7 +42,14 @@ class Environment
   def initialize(build_type)
     @slides     = []
     @build_type = build_type
+
+    if production?
+      Compass.configuration.http_images_path = './'
+    else
+      Compass.configuration.http_images_path = 'file:///' + ROOT.to_s
+    end
   end
+
   def name(value);  @name = value; end
   def title(value); @title = value; end
 
@@ -122,6 +128,8 @@ class Environment
     end
     if standalone?
       uri = encode_image(uri, type)
+    elsif production?
+      uri = uri.to_s.gsub(ROOT.to_s + '/', '')
     end
     attrs = attrs.map { |k, v| "#{k}=\"#{v}\"" }.join(' ')
     "<img src=\"#{ uri }\" #{ attrs } />"
@@ -143,6 +151,20 @@ class Environment
   def standalone?
     @build_type == 'standalone'
   end
+
+  def production?
+    @build_type == 'production'
+  end
+
+  def development?
+    @build_type == 'development'
+  end
+
+  def google_fonts
+    ['family=PT+Sans&subset=latin,cyrillic',
+     'family=PT+Sans+Narrow:700&subset=latin,cyrillic',
+     'family=PT+Mono']
+  end
 end
 
 desc 'Build site files'
@@ -154,9 +176,20 @@ task :build do |t, args|
 
   env    = Environment.new(ENV['build'] || 'development')
   layout = COMMON.join('layout.html.haml')
+  name   = 'rit3d.html'
+  name   = 'index.html' if env.production?
 
   SLIDES.glob('**/*.haml').sort.map { |i| env.slide(i) }
-  PUBLIC.join('rit3d.html').open('w') { |io| io << env.render(layout) }
+  PUBLIC.join(name).open('w') { |io| io << env.render(layout) }
+
+  if env.production?
+    ROOT.glob('**/*.{png,gif,jpg}') do |from|
+      next if from.to_s.start_with? PUBLIC.to_s
+      to = PUBLIC.join(from.relative_path_from(ROOT))
+      to.dirname.mkpath
+      FileUtils.cp(from, to)
+    end
+  end
 
   print "\n"
 end

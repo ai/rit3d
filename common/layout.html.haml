@@ -24,8 +24,12 @@
     .progress
       %div
 
-    %style
-      = include_style 'fonts'
+    - if production?
+      - google_fonts.each do |i|
+        %link( rel="stylesheet" href="http://fonts.googleapis.com/css?#{i}" )
+    - else
+      %style
+        = include_style 'fonts'
     %script
       = include_js 'jquery'
       = include_js 'shower'
