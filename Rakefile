@@ -201,6 +201,9 @@ task :build do |t, args|
     end
   end
 
+  if env.standalone?
+  end
+
   print "\n"
 end
 
@@ -221,6 +224,32 @@ task :watch do
     update { rebuild }
     delete { rebuild }
     create { rebuild }
+  end
+end
+
+desc 'Deploy files to web'
+task :deploy do
+  Dir.mktmpdir do |tmp_dir|
+    tmp = Pathname(tmp_dir)
+    %w(standalone production).each do |build|
+      ENV['build'] = build
+      Rake::Task['build'].execute
+      PUBLIC.glob('**/*') do |from|
+        next if from.directory?
+        to = tmp.join(from.relative_path_from(PUBLIC))
+        to.dirname.mkpath
+        FileUtils.cp(from, to)
+      end
+    end
+
+    `git checkout gh-pages`
+    ROOT.glob('*') { |i| i.rmtree }
+    tmp.glob('**/*') do |from|
+      next if from.directory?
+      to = ROOT.join(from.relative_path_from(tmp))
+      to.dirname.mkpath
+      FileUtils.cp(from, to)
+    end
   end
 end
 
