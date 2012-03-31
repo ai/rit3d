@@ -21,6 +21,16 @@ class Pathname
   def glob(pattern, &block)
     Pathname.glob(self.join(pattern), &block)
   end
+
+  def copy_to(to_dir, pattern = '**/*', &block)
+    self.glob(pattern) do |from|
+      next if from.directory?
+      next if block_given? and yield
+      to = to_dir.join(from.relative_path_from(self))
+      to.dirname.mkpath
+      FileUtils.cp(from, to)
+    end
+  end
 end
 
 Slide = Struct.new(:name, :title, :types, :html, :file) do
@@ -193,11 +203,8 @@ task :build do |t, args|
   PUBLIC.join(name).open('w') { |io| io << env.render(layout) }
 
   if env.production?
-    ROOT.glob('**/*.{png,gif,jpg}') do |from|
-      next if from.to_s.start_with? PUBLIC.to_s
-      to = PUBLIC.join(from.relative_path_from(ROOT))
-      to.dirname.mkpath
-      FileUtils.cp(from, to)
+    ROOT.copy_to(PUBLIC, '**/*.{png,gif,jpg}') do |image|
+      image.to_s.start_with? PUBLIC.to_s
     end
   end
 
@@ -235,22 +242,12 @@ task :deploy do
     %w(standalone production).each do |build|
       ENV['build'] = build
       Rake::Task['build'].execute
-      PUBLIC.glob('**/*') do |from|
-        next if from.directory?
-        to = tmp.join(from.relative_path_from(PUBLIC))
-        to.dirname.mkpath
-        FileUtils.cp(from, to)
-      end
+      PUBLIC.copy_to(tmp)
     end
 
     `git checkout gh-pages`
     ROOT.glob('*') { |i| i.rmtree }
-    tmp.glob('**/*') do |from|
-      next if from.directory?
-      to = ROOT.join(from.relative_path_from(tmp))
-      to.dirname.mkpath
-      FileUtils.cp(from, to)
-    end
+    tmp.copy_to(ROOT)
   end
 end
 
