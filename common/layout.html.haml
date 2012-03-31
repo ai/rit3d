@@ -4,6 +4,11 @@
     %meta( charset="UTF-8" )
     %title Вращай, двигай, загибай — практика 3D в Вебе
     %meta( name="viewport" content="width=1274, user-scalable=no" )
+    - if production?
+      - google_fonts.each do |i|
+        %link( rel="stylesheet" href="http://fonts.googleapis.com/css?#{i}" )
+    - if production?
+      %script( src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" )
     %style
       = include_style 'style'
       = slides_styles
@@ -24,14 +29,13 @@
     .progress
       %div
 
-    - if production?
-      - google_fonts.each do |i|
-        %link( rel="stylesheet" href="http://fonts.googleapis.com/css?#{i}" )
-    - else
+    - unless production?
       %style
         = include_style 'fonts'
     %script
-      = include_js 'jquery'
-      = include_js 'shower'
-      = include_js 'action'
-      = slides_jses
+      = compress_js do
+        - unless production?
+          = include_js 'jquery'
+        = include_js 'shower'
+        = include_js 'action'
+        = slides_jses

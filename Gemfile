@@ -9,3 +9,5 @@ gem 'animation'
 gem 'ceaser-easing'
 gem 'coffee-script'
 gem 'therubyracer'
+
+gem 'uglifier'

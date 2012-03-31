@@ -11,6 +11,7 @@ require 'compass'
 require 'animation'
 require 'ceaser-easing'
 require 'coffee-script'
+require 'uglifier'
 
 Compass.configuration.images_path     = ROOT.to_s
 Compass.configuration.fonts_path      = VENDOR.to_s
@@ -117,6 +118,15 @@ class Environment
 
   def slides_jses
     slides.map(&:js).reject {|i| !i.exist? }.map {|i| compile(i) }.join("\n")
+  end
+
+  def compress_js(&block)
+    js = capture_haml(&block)
+    if development?
+      js
+    else
+      Uglifier.compile(js, copyright: false)
+    end
   end
 
   def image_tag(name, attrs = {})
