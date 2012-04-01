@@ -23,7 +23,7 @@
       top: 0
       left: 0
       +backface-visibility(hidden)
-      +transition(all 1.4s linear)
+      +prop-transition(transform, 1.4s, linear)
     .love
       display: block
       +rotateY(-180deg)
@@ -34,7 +34,7 @@
       +rotateY(0)
   .task.cool
     .hal9000, .love
-      +transition(all 1.4s ceaser('easeInOutBack'))
+      +prop-transition("transform, background", 1.4s, ceaser('easeInOutBack'))
   .hoverer:hover .task.cool .hal9000, .task.cool .love
     background-color: #bbb
   .task.cool .hal9000, .hoverer:hover .task.cool .love
