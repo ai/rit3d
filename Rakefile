@@ -235,22 +235,6 @@ task :watch do
   end
 end
 
-desc 'Deploy files to web'
-task :deploy do
-  Dir.mktmpdir do |tmp_dir|
-    tmp = Pathname(tmp_dir)
-    %w(standalone production).each do |build|
-      ENV['build'] = build
-      Rake::Task['build'].execute
-      PUBLIC.copy_to(tmp)
-    end
-
-    `git checkout gh-pages`
-    ROOT.glob('*') { |i| i.rmtree }
-    tmp.copy_to(ROOT)
-  end
-end
-
 desc 'Optimize PNGs'
 task :png do
   ROOT.glob("**/*.png") do |i|
