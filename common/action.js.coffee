@@ -39,13 +39,11 @@ jQuery ($) ->
   # Перехватываем переключение между слайдами
 
   slideCallbacks = jQuery.Callbacks()
-  closeCallbacks = jQuery.Callbacks()
   listCallbacks  = jQuery.Callbacks()
   listMode       = false
   currentSlide   = null
 
   urlChanged = ->
-    closeCallbacks.fire()
     if location.search == '?full'
       listMode = false
       if currentSlide != location.hash
@@ -68,7 +66,6 @@ jQuery ($) ->
   $(window).on('hashchange', urlChanged)
 
   presentation.onSlide = (callback) -> slideCallbacks.add(callback)
-  presentation.onClose = (callback) ->  listCallbacks.add(callback)
   presentation.onList  = (callback) ->  listCallbacks.add(callback)
 
   # Включение/выключение 3D-режима
@@ -86,19 +83,20 @@ jQuery ($) ->
 
   # Выключаем GIF-анимацию в списке слайдов
 
-  after 500, ->
-    $('img.gif').each ->
-      img    = $(@)
+  $('img.gif').each ->
+    img = $(@)
+    img.load ->
       canvas = document.createElement('canvas')
-      canvas.width  = @.width
-      canvas.height = @.height
-      canvas.getContext('2d').drawImage(@, 0, 0, canvas.width, canvas.height)
+      canvas.width  = img.width()
+      canvas.height = img.height()
+      canvas.getContext('2d').drawImage(img[0], 0, 0,
+        canvas.width, canvas.height)
       clone = $('<img />').
         attr(class: img.attr('class')).
         removeClass('gif').addClass('disabled-gif')
       try
         clone[0].src = canvas.toDataURL('image/gif')
-        clone.insertAfter(@)
+        clone.insertAfter(img)
         $('body').addClass('disable-gif')
       catch error
         console.log("Can’t disable GIF-animation in development mode")
@@ -108,9 +106,16 @@ jQuery ($) ->
   hovering = null
 
   presentation.onSlide (slide) ->
+    if hovering
+      clearInterval(hovering)
+      hovering = false
     hover = slide.find('.animate-hover')
     if hover.length
-      hovering = every 3000, -> hover.toggleClass('hovered')
+      hoverSlide = slide
+      hovering = every 3000, ->
+        hover.toggleClass('hovered')
 
-  presentation.onClose ->
-    clearInterval(hovering)
+  presentation.onList ->
+    if hovering
+      clearInterval(hovering)
+      hovering = false
