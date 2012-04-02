@@ -1,0 +1,2236 @@
+<!DOCTYPE html>
+<html lang='ru '>
+  <head>
+    <meta charset='UTF-8'>
+    <title>Вращай, двигай, загибай — практика 3D в Вебе</title>
+    <meta content='width=1274, user-scalable=no' name='viewport'>
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans&amp;subset=latin,cyrillic' rel='stylesheet'>
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:700&amp;subset=latin,cyrillic' rel='stylesheet'>
+    <link href='http://fonts.googleapis.com/css?family=PT+Mono' rel='stylesheet'>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+    <style>
+      html, body, div, span, applet, object, iframe,
+      h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+      a, abbr, acronym, address, big, cite, code,
+      del, dfn, em, img, ins, kbd, q, s, samp,
+      small, strike, strong, sub, sup, tt, var,
+      b, u, i, center,
+      dl, dt, dd, ol, ul, li,
+      fieldset, form, label, legend,
+      table, caption, tbody, tfoot, thead, tr, th, td,
+      article, aside, canvas, details, embed,
+      figure, figcaption, footer, header, hgroup,
+      menu, nav, output, ruby, section, summary,
+      time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline; }
+      
+      body {
+        line-height: 1; }
+      
+      ol, ul {
+        list-style: none; }
+      
+      table {
+        border-collapse: collapse;
+        border-spacing: 0; }
+      
+      caption, th, td {
+        text-align: left;
+        font-weight: normal;
+        vertical-align: middle; }
+      
+      q, blockquote {
+        quotes: none; }
+        q:before, q:after, blockquote:before, blockquote:after {
+          content: "";
+          content: none; }
+      
+      a img {
+        border: none; }
+      
+      article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+        display: block; }
+      
+      body {
+        counter-reset: paging;
+        font-family: "PT Sans", sans-serif;
+        font-size: 30px;
+        line-height: 1.4; }
+      
+      .slide {
+        padding: 71px 90px 0 90px;
+        width: 844px;
+        height: 505px;
+        background: white;
+        color: black; }
+        .slide:after {
+          position: absolute;
+          counter-increment: paging;
+          content: counter(paging, decimal-leading-zero);
+          line-height: 1; }
+        .slide h2 {
+          margin: 0 0 80px 0;
+          color: #666666;
+          font-family: "PT Sans Narrow", sans-serif;
+          font-weight: bold;
+          font-size: 50px;
+          line-height: 1; }
+        .slide p {
+          margin-bottom: 20px; }
+        .slide a {
+          color: #0099cc; }
+      
+      .slide ol, .slide ul {
+        margin: 10px 0 0 0;
+        counter-reset: list; }
+        .slide ol ul, .slide ol ol, .slide ul ul, .slide ul ol {
+          margin: 0 0 0 36px; }
+        .slide ol > li, .slide ul > li {
+          margin-bottom: 10px;
+          position: relative; }
+          .slide ol > li:before, .slide ul > li:before {
+            position: absolute;
+            top: -4px;
+            left: -117px;
+            width: 100px;
+            color: #bbbbbb;
+            text-align: right; }
+          .slide ol > li.quotes-first, .slide ul > li.quotes-first {
+            margin-left: -12px; }
+            .slide ol > li.quotes-first:before, .slide ul > li.quotes-first:before {
+              left: -105px; }
+      .slide ul > li:before {
+        content: "\2022";
+        line-height: 48px;
+        font-size: 40px; }
+      .slide ol > li:before {
+        counter-increment: list;
+        content: counter(list) ".";
+        top: 0; }
+      
+      .slide mark {
+        margin: 0 -8px;
+        padding: 3px 8px;
+        border-radius: 8px;
+        background: rgba(236, 249, 0, 0.37);
+        color: black;
+        font-style: normal; }
+      
+      .slide kbd, .slide code, .slide samp {
+        padding: 3px 8px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        -ms-border-radius: 8px;
+        -o-border-radius: 8px;
+        border-radius: 8px;
+        background: #eeeeee;
+        color: black;
+        line-height: 1;
+        font-family: "PT Mono", monospace; }
+      
+      .slide pre {
+        margin: 0 0 20px 0;
+        counter-reset: code;
+        white-space: normal; }
+        .slide pre code {
+          display: block;
+          padding: 0;
+          background: none;
+          white-space: pre;
+          line-height: 50px; }
+          .slide pre code:before {
+            position: absolute;
+            margin: 0 0 0 -110px;
+            width: 100px;
+            color: #bbbbbb;
+            text-align: right;
+            counter-increment: code;
+            content: counter(code, decimal-leading-zero) "."; }
+        .slide pre .important {
+          margin: 0;
+          background: #cc0000;
+          color: white;
+          font-weight: normal; }
+        .slide pre .comment {
+          margin: 0;
+          padding: 0;
+          background: none;
+          color: #999999; }
+      
+      .slide.cover {
+        background: black; }
+        .slide.cover img.cover {
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: -1;
+          clip: rect(0, 1024px, 586px, 0); }
+        .slide.cover h2 {
+          color: white; }
+      
+      .slide.shout h2 {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 844px;
+        text-align: center;
+        line-height: 1;
+        font-size: 80px;
+        -webkit-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+        transform: translateY(-50%);
+        padding: 0 90px; }
+      
+      .list {
+        padding: 80px 0 40px 100px;
+        background: #585a5e url('common/linen.png'); }
+        .list:after {
+          clear: both;
+          display: block;
+          content: ""; }
+      
+      .list .caption {
+        margin: 0 0 50px;
+        color: #3c3d40;
+        text-shadow: 0 1px 1px #8d8e90; }
+        .list .caption h1 {
+          font-family: "PT Sans Narrow", sans-serif;
+          font-weight: bold;
+          font-size: 50px;
+          line-height: 1; }
+        .list .caption a {
+          color: #4b86c2;
+          text-shadow: 0 -1px 1px #1f3f60;
+          text-decoration: none; }
+          .list .caption a:hover {
+            color: #5ca4ed; }
+      
+      .list .slide {
+        position: relative;
+        float: left;
+        margin: 0 -432px -220px 0;
+        -webkit-transform-origin: 0 0;
+        -moz-transform-origin: 0 0;
+        -ms-transform-origin: 0 0;
+        -o-transform-origin: 0 0;
+        transform-origin: 0 0;
+        -webkit-transform: scale(0.5, 0.5);
+        -moz-transform: scale(0.5, 0.5);
+        -ms-transform: scale(0.5, 0.5);
+        -o-transform: scale(0.5, 0.5);
+        transform: scale(0.5, 0.5); }
+        .list .slide:before {
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: -1;
+          width: 512px;
+          height: 288px;
+          box-shadow: rgba(0, 0, 0, 0.005) 0 0 30px, rgba(42, 43, 45, 0.6) 0 20px 50px;
+          border-radius: 2px;
+          content: "";
+          -webkit-transform-origin: 0 0;
+          -moz-transform-origin: 0 0;
+          -ms-transform-origin: 0 0;
+          -o-transform-origin: 0 0;
+          transform-origin: 0 0;
+          -webkit-transform: scale(2, 2);
+          -moz-transform: scale(2, 2);
+          -ms-transform: scale(2, 2);
+          -o-transform: scale(2, 2);
+          transform: scale(2, 2); }
+        .list .slide:after {
+          bottom: -85px;
+          left: 120px;
+          color: #3c3d40;
+          text-shadow: 0 2px 1px #8d8e90;
+          font-weight: bold;
+          font-size: 50px; }
+        .list .slide:hover:before {
+          box-shadow: rgba(42, 43, 45, 0.3) 0 0 0 10px, rgba(42, 43, 45, 0.6) 0 20px 50px; }
+        .list .slide:target:before {
+          box-shadow: #305f8d 0 0 0 1px, #3c7cbd 0 0 0 10px, rgba(42, 43, 45, 0.6) 0 20px 50px; }
+        .list .slide:target:after {
+          text-shadow: rgba(42, 43, 45, 0.6) 0 2px 1px;
+          color: #4b86c2; }
+        .list .slide * {
+          -webkit-animation: none !important;
+          -moz-animation: none !important;
+          -ms-animation: none !important;
+          animation: none !important; }
+      
+      .disable-gif .list .slide .gif {
+        display: none; }
+      .disable-gif .list .slide .disabled-gif {
+        display: block; }
+      
+      @media all and (max-width: 1304px) {
+        .list .slide {
+          margin: 0 -718px -400px 0;
+          -webkit-transform: scale(0.25, 0.25);
+          -moz-transform: scale(0.25, 0.25);
+          -ms-transform: scale(0.25, 0.25);
+          -o-transform: scale(0.25, 0.25);
+          transform: scale(0.25, 0.25); }
+          .list .slide:before {
+            width: 256px;
+            height: 160px;
+            -webkit-transform: scale(4, 4);
+            -moz-transform: scale(4, 4);
+            -ms-transform: scale(4, 4);
+            -o-transform: scale(4, 4);
+            transform: scale(4, 4); }
+          .list .slide:target:before {
+            box-shadow: #305f8d 0 0 0 1px, #3c7cbd 0 0 0 10px, rgba(42, 43, 45, 0.6) 0 20px 50px; }
+          .list .slide:target:after {
+            text-shadow: 0 4px 2px rgba(42, 43, 45, 0.6); } }
+      .full {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        overflow: hidden;
+        margin: -288px 0 0 -512px;
+        width: 1024px;
+        height: 576px;
+        background: black; }
+        .full .caption {
+          display: none; }
+        .full .slide {
+          position: absolute;
+          top: 0;
+          left: 0;
+          visibility: hidden; }
+          .full .slide:after {
+            position: absolute;
+            left: 52px;
+            bottom: 20px;
+            color: #777777;
+            opacity: 0.5;
+            line-height: 18px;
+            font-size: 25px; }
+          .full .slide:target {
+            visibility: visible; }
+          .full .slide .gif {
+            display: block; }
+          .full .slide .disabled-gif {
+            display: none; }
+      
+      .full .slide.cover {
+        z-index: 1; }
+        .full .slide.cover:after {
+          visibility: hidden; }
+      
+      .full .progress {
+        position: absolute;
+        right: 90px;
+        bottom: 24px;
+        left: 90px; }
+        .full .progress div {
+          width: 0;
+          height: 9px;
+          border-radius: 4px;
+          background: rgba(177, 177, 177, 0.4);
+          -webkit-transition: width 200ms linear;
+          -moz-transition: width 200ms linear;
+          -ms-transition: width 200ms linear;
+          -o-transition: width 200ms linear;
+          transition: width 200ms linear; }
+      
+      @-moz-keyframes rotation {
+        from {
+          -moz-transform: rotateY(0);
+          transform: rotateY(0); }
+      
+        to {
+          -moz-transform: rotateY(360deg);
+          transform: rotateY(360deg); } }
+      
+      @-webkit-keyframes rotation {
+        from {
+          -webkit-transform: rotateY(0);
+          transform: rotateY(0); }
+      
+        to {
+          -webkit-transform: rotateY(360deg);
+          transform: rotateY(360deg); } }
+      
+      @-o-keyframes rotation {
+        from {
+          -o-transform: rotateY(0);
+          transform: rotateY(0); }
+      
+        to {
+          -o-transform: rotateY(360deg);
+          transform: rotateY(360deg); } }
+      
+      @-ms-keyframes rotation {
+        from {
+          -ms-transform: rotateY(0);
+          transform: rotateY(0); }
+      
+        to {
+          -ms-transform: rotateY(360deg);
+          transform: rotateY(360deg); } }
+      
+      @keyframes rotation {
+        from {
+          transform: rotateY(0); }
+      
+        to {
+          transform: rotateY(360deg); } }
+      
+      .task {
+        line-height: 1; }
+        .task .hal9000, .task .love {
+          width: 190px;
+          height: 190px;
+          background-color: white;
+          border: 1px solid #bbbbbb;
+          -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 10px;
+          -moz-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 10px;
+          box-shadow: rgba(0, 0, 0, 0.3) 0 1px 10px; }
+        .task .hal9000 {
+          background-image: url('common/hal9000.png');
+          background-repeat: no-repeat;
+          background-position: 20px 20px; }
+        .task .love {
+          font-family: "PT Sans Narrow", sans-serif;
+          font-weight: bold;
+          text-align: center;
+          font-size: 35px;
+          padding-top: 60px;
+          height: 130px; }
+          .task .love em {
+            color: #0099cc; }
+      
+      .animate-hover {
+        position: relative; }
+        .animate-hover.hovered:after {
+          left: 50%;
+          bottom: -20px;
+          position: absolute;
+          content: " ";
+          width: 20px;
+          height: 32px;
+          background: url('common/cursor.png') no-repeat; }
+      .slide.cover-slide h2 {
+        position: relative;
+        font-size: 65px;
+        line-height: 1.1;
+        text-shadow: black 1px 0 1px, black 0 1px 1px, black -1px 0 1px, black 0 -1px 1px; }
+      .slide.cover-slide .orbit {
+        position: absolute;
+        top: 320px;
+        left: 380px; }
+      .slide.cover-slide .monolith {
+        position: absolute;
+        top: -50px;
+        left: 0px;
+        width: 153px;
+        height: 247px;
+        background: url('slides/01_cover/monolith.png') no-repeat; }
+      
+      .enabled3d .slide.cover-slide.current .orbit {
+        -webkit-transform-style: preserve-3d;
+        -moz-transform-style: preserve-3d;
+        -ms-transform-style: preserve-3d;
+        -o-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+        -webkit-transform: rotate3d(1, 0, -0.2, 50deg);
+        -moz-transform: rotate3d(1, 0, -0.2, 50deg);
+        -ms-transform: rotate3d(1, 0, -0.2, 50deg);
+        -o-transform: rotate3d(1, 0, -0.2, 50deg);
+        transform: rotate3d(1, 0, -0.2, 50deg); }
+      .enabled3d .slide.cover-slide.current .monolith {
+        top: 0;
+        left: 0;
+        width: 120px;
+        height: 270px;
+        -webkit-animation: monolith-rotating 6s infinite linear;
+        -moz-animation: monolith-rotating 6s infinite linear;
+        -ms-animation: monolith-rotating 6s infinite linear;
+        animation: monolith-rotating 6s infinite linear;
+        -webkit-transform: rotateY(45deg);
+        -moz-transform: rotateY(45deg);
+        -ms-transform: rotateY(45deg);
+        -o-transform: rotateY(45deg);
+        transform: rotateY(45deg);
+        -webkit-transform-style: preserve-3d;
+        -moz-transform-style: preserve-3d;
+        -ms-transform-style: preserve-3d;
+        -o-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+        background: transparent; }
+        .enabled3d .slide.cover-slide.current .monolith .front, .enabled3d .slide.cover-slide.current .monolith .back, .enabled3d .slide.cover-slide.current .monolith .left, .enabled3d .slide.cover-slide.current .monolith .right, .enabled3d .slide.cover-slide.current .monolith .top, .enabled3d .slide.cover-slide.current .monolith .bottom {
+          position: absolute;
+          top: 0;
+          left: 0;
+          background: black; }
+        .enabled3d .slide.cover-slide.current .monolith .front, .enabled3d .slide.cover-slide.current .monolith .back {
+          top: 0;
+          width: 100%;
+          height: 100%; }
+        .enabled3d .slide.cover-slide.current .monolith .front {
+          -webkit-transform: translateZ(15px);
+          -moz-transform: translateZ(15px);
+          -ms-transform: translateZ(15px);
+          -o-transform: translateZ(15px);
+          transform: translateZ(15px);
+          -webkit-animation: monolith-lightning 6s infinite linear -2.5s;
+          -moz-animation: monolith-lightning 6s infinite linear -2.5s;
+          -ms-animation: monolith-lightning 6s infinite linear -2.5s;
+          animation: monolith-lightning 6s infinite linear -2.5s;
+          background: #211817; }
+        .enabled3d .slide.cover-slide.current .monolith .back {
+          -webkit-transform: translateZ(-15px);
+          -moz-transform: translateZ(-15px);
+          -ms-transform: translateZ(-15px);
+          -o-transform: translateZ(-15px);
+          transform: translateZ(-15px);
+          -webkit-animation: monolith-lightning 6s infinite linear 0.5s;
+          -moz-animation: monolith-lightning 6s infinite linear 0.5s;
+          -ms-animation: monolith-lightning 6s infinite linear 0.5s;
+          animation: monolith-lightning 6s infinite linear 0.5s; }
+        .enabled3d .slide.cover-slide.current .monolith .left, .enabled3d .slide.cover-slide.current .monolith .right {
+          left: 45px;
+          width: 30px;
+          height: 100%; }
+        .enabled3d .slide.cover-slide.current .monolith .left {
+          -webkit-transform: rotateY(90deg) translateZ(60px);
+          -moz-transform: rotateY(90deg) translateZ(60px);
+          -ms-transform: rotateY(90deg) translateZ(60px);
+          -o-transform: rotateY(90deg) translateZ(60px);
+          transform: rotateY(90deg) translateZ(60px);
+          -webkit-animation: monolith-lightning 6s infinite linear -4s;
+          -moz-animation: monolith-lightning 6s infinite linear -4s;
+          -ms-animation: monolith-lightning 6s infinite linear -4s;
+          animation: monolith-lightning 6s infinite linear -4s; }
+        .enabled3d .slide.cover-slide.current .monolith .right {
+          -webkit-transform: rotateY(90deg) translateZ(-60px);
+          -moz-transform: rotateY(90deg) translateZ(-60px);
+          -ms-transform: rotateY(90deg) translateZ(-60px);
+          -o-transform: rotateY(90deg) translateZ(-60px);
+          transform: rotateY(90deg) translateZ(-60px);
+          -webkit-animation: monolith-lightning 6s infinite linear -1s;
+          -moz-animation: monolith-lightning 6s infinite linear -1s;
+          -ms-animation: monolith-lightning 6s infinite linear -1s;
+          animation: monolith-lightning 6s infinite linear -1s; }
+        .enabled3d .slide.cover-slide.current .monolith .top, .enabled3d .slide.cover-slide.current .monolith .bottom {
+          width: 100%;
+          height: 30px; }
+        .enabled3d .slide.cover-slide.current .monolith .top {
+          -webkit-transform: rotateX(90deg) translateZ(15px);
+          -moz-transform: rotateX(90deg) translateZ(15px);
+          -ms-transform: rotateX(90deg) translateZ(15px);
+          -o-transform: rotateX(90deg) translateZ(15px);
+          transform: rotateX(90deg) translateZ(15px); }
+        .enabled3d .slide.cover-slide.current .monolith .bottom {
+          -webkit-transform: rotateX(90deg) translateZ(-255px);
+          -moz-transform: rotateX(90deg) translateZ(-255px);
+          -ms-transform: rotateX(90deg) translateZ(-255px);
+          -o-transform: rotateX(90deg) translateZ(-255px);
+          transform: rotateX(90deg) translateZ(-255px); }
+      
+      @-moz-keyframes monolith-rotating {
+        from {
+          -moz-transform: rotateY(45deg);
+          transform: rotateY(45deg); }
+      
+        to {
+          -moz-transform: rotateY(405deg);
+          transform: rotateY(405deg); } }
+      
+      @-webkit-keyframes monolith-rotating {
+        from {
+          -webkit-transform: rotateY(45deg);
+          transform: rotateY(45deg); }
+      
+        to {
+          -webkit-transform: rotateY(405deg);
+          transform: rotateY(405deg); } }
+      
+      @-o-keyframes monolith-rotating {
+        from {
+          -o-transform: rotateY(45deg);
+          transform: rotateY(45deg); }
+      
+        to {
+          -o-transform: rotateY(405deg);
+          transform: rotateY(405deg); } }
+      
+      @-ms-keyframes monolith-rotating {
+        from {
+          -ms-transform: rotateY(45deg);
+          transform: rotateY(45deg); }
+      
+        to {
+          -ms-transform: rotateY(405deg);
+          transform: rotateY(405deg); } }
+      
+      @keyframes monolith-rotating {
+        from {
+          transform: rotateY(45deg); }
+      
+        to {
+          transform: rotateY(405deg); } }
+      
+      @-moz-keyframes monolith-lightning {
+        from {
+          background: black; }
+      
+        50% {
+          background: #211817; }
+      
+        to {
+          background: black; } }
+      
+      @-webkit-keyframes monolith-lightning {
+        from {
+          background: black; }
+      
+        50% {
+          background: #211817; }
+      
+        to {
+          background: black; } }
+      
+      @-o-keyframes monolith-lightning {
+        from {
+          background: black; }
+      
+        50% {
+          background: #211817; }
+      
+        to {
+          background: black; } }
+      
+      @-ms-keyframes monolith-lightning {
+        from {
+          background: black; }
+      
+        50% {
+          background: #211817; }
+      
+        to {
+          background: black; } }
+      
+      @keyframes monolith-lightning {
+        from {
+          background: black; }
+      
+        50% {
+          background: #211817; }
+      
+        to {
+          background: black; } }
+      
+      .slide.author-slide h2 {
+        position: relative;
+        top: 180px;
+        font-size: 65px; }
+      .slide.author-slide .contacts {
+        position: absolute;
+        top: 330px; }
+        .slide.author-slide .contacts a {
+          font-size: 45px;
+          margin-right: 34px; }
+      .slide.author-slide a {
+        color: white;
+        text-decoration: none; }
+        .slide.author-slide a:hover span {
+          text-shadow: white 0 0 3px;
+          -webkit-box-shadow: white 0 4px 4px -4px, white 0 -4px 4px -4px inset;
+          -moz-box-shadow: white 0 4px 4px -4px, white 0 -4px 4px -4px inset;
+          box-shadow: white 0 4px 4px -4px, white 0 -4px 4px -4px inset;
+          border-bottom: 3px solid white; }
+      .slide.author-slide .martians {
+        position: absolute;
+        top: 96px;
+        left: 523px;
+        font-family: "PT Sans Narrow", sans-serif;
+        font-weight: bold;
+        font-size: 50px;
+        line-height: 1; }
+        .slide.author-slide .martians .arrow {
+          display: inline;
+          padding-right: 7px; }
+        .slide.author-slide .martians .icon {
+          position: absolute;
+          top: 3px;
+          right: -95px;
+          width: 80px;
+          height: 57px;
+          background: url('slides/02_author/evilmartians.png') no-repeat; }
+      
+      .slide.support-slide .browsers {
+        margin: 135px 0 0 -40px;
+        text-align: center;
+        font-size: 30px; }
+      .slide.support-slide .browser {
+        margin: 0 0 0 40px;
+        display: inline-block;
+        padding-top: 100px;
+        position: relative;
+        width: 100px; }
+        .slide.support-slide .browser img {
+          position: absolute;
+          top: 0;
+          left: 0; }
+        .slide.support-slide .browser.msie img {
+          left: -10px; }
+        .slide.support-slide .browser.ios img {
+          top: 4px;
+          left: 2px; }
+        .slide.support-slide .browser.android img {
+          left: 5px; }
+        .slide.support-slide .browser.unsupported {
+          opacity: 0.2; }
+          .slide.support-slide .browser.unsupported .version {
+            position: relative;
+            left: 6px; }
+      
+      .slide.yes-slide img.cover {
+        height: 100%;
+        left: auto;
+        right: 0;
+        clip: none; }
+      .slide.yes-slide h2 {
+        margin-top: 80px;
+        font-size: 65px; }
+      
+      .slide.part1-slide h2 {
+        margin-top: 360px;
+        font-size: 65px;
+        text-shadow: black 1px 0 1px, black 0 1px 1px, black -1px 0 1px, black 0 -1px 1px; }
+      
+      .slide.history90-slide h2 {
+        font-size: 60px;
+        margin-top: 115px;
+        text-shadow: black 1px 0 1px, black 0 1px 1px, black -1px 0 1px, black 0 -1px 1px; }
+      
+      .slide.history00-slide h2 {
+        font-size: 60px;
+        margin-top: 115px;
+        color: black;
+        text-shadow: white 1px 0 1px, white 0 1px 1px, white -1px 0 1px, white 0 -1px 1px; }
+      
+      .slide.metro-slide figure {
+        position: absolute;
+        top: 215px;
+        right: 65px;
+        text-align: center;
+        width: 292px; }
+      .slide.metro-slide figcaption {
+        font-size: 25px; }
+      
+      .slide.android-slide ul {
+        padding-right: 300px; }
+      .slide.android-slide figure {
+        position: absolute;
+        top: 120px;
+        right: 40px;
+        text-align: center;
+        width: 350px; }
+      .slide.android-slide figcaption {
+        font-size: 25px; }
+      
+      .slide.translator-slide .translation {
+        margin-top: -15px; }
+        .slide.translator-slide .translation > div {
+          width: 300px;
+          height: 300px;
+          line-height: 300px;
+          text-align: center;
+          -webkit-border-radius: 50%;
+          -moz-border-radius: 50%;
+          -ms-border-radius: 50%;
+          -o-border-radius: 50%;
+          border-radius: 50%;
+          display: inline-block;
+          margin-left: -70px;
+          border: 4px solid black;
+          position: relative; }
+          .slide.translator-slide .translation > div .arrow {
+            position: absolute;
+            font-size: 50px;
+            top: -1px;
+            right: 6px;
+            z-index: 10; }
+          .slide.translator-slide .translation > div:first-child {
+            margin-left: 0; }
+        .slide.translator-slide .translation .designer {
+          border-color: #ff8800;
+          background-color: rgba(255, 136, 0, 0.5); }
+        .slide.translator-slide .translation .frontend {
+          border-color: #669900;
+          background-color: rgba(102, 153, 0, 0.5); }
+        .slide.translator-slide .translation .programmer {
+          border-color: #0099cc;
+          background-color: rgba(0, 153, 204, 0.5); }
+      
+      .slide.part2-slide h2 {
+        color: black;
+        font-size: 65px;
+        text-shadow: white 1px 0 1px, white 0 1px 1px, white -1px 0 1px, white 0 -1px 1px;
+        margin-left: 90px;
+        margin-top: -30px; }
+      
+      .slide.transform-slide mark {
+        margin: 0; }
+      .slide.transform-slide .prefixes code {
+        color: #999999; }
+      .slide.transform-slide em {
+        color: black; }
+      
+      .slide.transform2d-slide .transform {
+        margin-bottom: 30px;
+        position: relative; }
+      .slide.transform2d-slide code span {
+        color: #999999; }
+      .slide.transform2d-slide .example {
+        position: absolute;
+        left: 540px;
+        top: -3px;
+        width: 50px;
+        height: 50px;
+        background: #669900; }
+      .slide.transform2d-slide .origin {
+        opacity: 0.4; }
+      .slide.transform2d-slide .rotate {
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        transform: rotate(45deg); }
+      .slide.transform2d-slide .translate {
+        -webkit-transform: translateX(60px);
+        -moz-transform: translateX(60px);
+        -ms-transform: translateX(60px);
+        -o-transform: translateX(60px);
+        transform: translateX(60px); }
+      .slide.transform2d-slide .skew {
+        -webkit-transform: skewY(25deg);
+        -moz-transform: skewY(25deg);
+        -ms-transform: skewY(25deg);
+        -o-transform: skewY(25deg);
+        transform: skewY(25deg); }
+      .slide.transform2d-slide .scale {
+        -webkit-transform: scale(0.5, 0.5);
+        -moz-transform: scale(0.5, 0.5);
+        -ms-transform: scale(0.5, 0.5);
+        -o-transform: scale(0.5, 0.5);
+        transform: scale(0.5, 0.5); }
+      
+      .slide.transform3d-slide p {
+        margin-top: -35px; }
+      
+      .slide.rotate-slide h2 {
+        margin-bottom: 60px; }
+      .slide.rotate-slide .rotation {
+        position: relative;
+        margin-bottom: 75px; }
+      .slide.rotate-slide code span {
+        color: #999999; }
+      .slide.rotate-slide .x {
+        color: #0099cc; }
+      .slide.rotate-slide .y {
+        color: #9933cc; }
+      .slide.rotate-slide .z {
+        color: #cc0000; }
+      .slide.rotate-slide .label {
+        top: -38px; }
+      .slide.rotate-slide .angle {
+        top: 40px;
+        margin-right: -16px; }
+        .slide.rotate-slide .angle span {
+          font-size: 10px; }
+      .slide.rotate-slide .eql {
+        top: 25px;
+        color: #aaaaaa;
+        font-size: 25px; }
+      .slide.rotate-slide .label, .slide.rotate-slide .angle {
+        opacity: 0.4; }
+      .slide.rotate-slide .label, .slide.rotate-slide .angle, .slide.rotate-slide .eql {
+        position: absolute; }
+        .slide.rotate-slide .label.x, .slide.rotate-slide .angle.x, .slide.rotate-slide .eql.x {
+          right: 459px; }
+        .slide.rotate-slide .label.y, .slide.rotate-slide .angle.y, .slide.rotate-slide .eql.y {
+          right: 404px; }
+        .slide.rotate-slide .label.z, .slide.rotate-slide .angle.z, .slide.rotate-slide .eql.z {
+          right: 352px; }
+      .slide.rotate-slide .example {
+        position: absolute;
+        left: 700px;
+        top: -20px; }
+        .slide.rotate-slide .example .rotator {
+          width: 84px;
+          height: 84px;
+          position: relative; }
+          .slide.rotate-slide .example .rotator div {
+            float: left;
+            background: #669900;
+            width: 27px;
+            height: 27px;
+            margin: 0 1px 1px 0; }
+      
+      .enabled3d .slide.rotate-slide.current .example {
+        -webkit-perspective: 150px;
+        -moz-perspective: 150px;
+        -ms-perspective: 150px;
+        -o-perspective: 150px;
+        perspective: 150px; }
+        .enabled3d .slide.rotate-slide.current .example.rotatex .rotator {
+          -webkit-transform: rotateX(55deg);
+          -moz-transform: rotateX(55deg);
+          -ms-transform: rotateX(55deg);
+          -o-transform: rotateX(55deg);
+          transform: rotateX(55deg); }
+        .enabled3d .slide.rotate-slide.current .example.rotatey .rotator {
+          -webkit-transform: rotateY(55deg);
+          -moz-transform: rotateY(55deg);
+          -ms-transform: rotateY(55deg);
+          -o-transform: rotateY(55deg);
+          transform: rotateY(55deg); }
+        .enabled3d .slide.rotate-slide.current .example.rotate3d .rotator {
+          -webkit-transform: rotate3d(4, 2, 1, 40deg);
+          -moz-transform: rotate3d(4, 2, 1, 40deg);
+          -ms-transform: rotate3d(4, 2, 1, 40deg);
+          -o-transform: rotate3d(4, 2, 1, 40deg);
+          transform: rotate3d(4, 2, 1, 40deg); }
+      
+      .slide.translate-slide h2 {
+        margin-bottom: 90px; }
+      .slide.translate-slide .translate {
+        position: relative;
+        margin-bottom: 120px; }
+      .slide.translate-slide code span {
+        color: #999999; }
+      .slide.translate-slide .example {
+        position: absolute;
+        left: 600px;
+        top: -40px; }
+        .slide.translate-slide .example .rotator {
+          width: 132px;
+          height: 132px; }
+        .slide.translate-slide .example .origin, .slide.translate-slide .example .changed {
+          position: absolute;
+          width: 100%;
+          height: 100%; }
+        .slide.translate-slide .example .changed div {
+          float: left;
+          background: #669900;
+          width: 43px;
+          height: 43px;
+          margin: 0 1px 1px 0; }
+        .slide.translate-slide .example .origin {
+          background: #cccccc;
+          opacity: 0.9; }
+      
+      .enabled3d .slide.translate-slide.current .example {
+        -webkit-perspective: 4000px;
+        -moz-perspective: 4000px;
+        -ms-perspective: 4000px;
+        -o-perspective: 4000px;
+        perspective: 4000px; }
+      .enabled3d .slide.translate-slide.current .rotator {
+        -webkit-animation: rotation 8s infinite linear;
+        -moz-animation: rotation 8s infinite linear;
+        -ms-animation: rotation 8s infinite linear;
+        animation: rotation 8s infinite linear;
+        -webkit-transform-style: preserve-3d;
+        -moz-transform-style: preserve-3d;
+        -ms-transform-style: preserve-3d;
+        -o-transform-style: preserve-3d;
+        transform-style: preserve-3d; }
+      .enabled3d .slide.translate-slide.current .translateZ .changed {
+        -webkit-transform: translateZ(50px);
+        -moz-transform: translateZ(50px);
+        -ms-transform: translateZ(50px);
+        -o-transform: translateZ(50px);
+        transform: translateZ(50px); }
+      .enabled3d .slide.translate-slide.current .translateX .changed {
+        -webkit-transform: translateX(50%);
+        -moz-transform: translateX(50%);
+        -ms-transform: translateX(50%);
+        -o-transform: translateX(50%);
+        transform: translateX(50%); }
+      
+      .slide.backface-slide h2 {
+        margin-bottom: 90px; }
+      .slide.backface-slide .example {
+        position: relative;
+        margin-bottom: 120px; }
+      .slide.backface-slide .perspective {
+        position: absolute;
+        left: 600px;
+        top: -40px; }
+      .slide.backface-slide .rotator {
+        width: 132px;
+        height: 132px; }
+        .slide.backface-slide .rotator div {
+          float: left;
+          background: #669900;
+          width: 43px;
+          height: 43px;
+          margin: 0 1px 1px 0; }
+        .slide.backface-slide .rotator .img {
+          float: none;
+          position: absolute;
+          top: 24px;
+          left: 5px;
+          width: 120px;
+          height: 88px;
+          background: url('slides/26_backface/gipno.png') no-repeat; }
+      
+      .enabled3d .slide.backface-slide .perspective {
+        -webkit-perspective: 4000px;
+        -moz-perspective: 4000px;
+        -ms-perspective: 4000px;
+        -o-perspective: 4000px;
+        perspective: 4000px; }
+      .enabled3d .slide.backface-slide .rotator {
+        -webkit-animation: rotation 4s infinite linear;
+        -moz-animation: rotation 4s infinite linear;
+        -ms-animation: rotation 4s infinite linear;
+        animation: rotation 4s infinite linear; }
+        .enabled3d .slide.backface-slide .rotator.hidden {
+          -webkit-backface-visibility: hidden;
+          -moz-backface-visibility: hidden;
+          -ms-backface-visibility: hidden;
+          -o-backface-visibility: hidden;
+          backface-visibility: hidden; }
+      
+      .slide.perspective-slide h2 {
+        margin-bottom: 70px; }
+      .slide.perspective-slide .perspective {
+        position: relative;
+        margin-bottom: 70px; }
+      .slide.perspective-slide .example {
+        position: absolute;
+        left: 600px;
+        top: -20px; }
+      .slide.perspective-slide .rotator {
+        width: 132px;
+        height: 132px; }
+        .slide.perspective-slide .rotator div {
+          float: left;
+          background: #669900;
+          width: 43px;
+          height: 43px;
+          margin: 0 1px 1px 0; }
+      
+      .enabled3d .slide.perspective-slide .big {
+        -webkit-perspective: 2000px;
+        -moz-perspective: 2000px;
+        -ms-perspective: 2000px;
+        -o-perspective: 2000px;
+        perspective: 2000px; }
+      .enabled3d .slide.perspective-slide .small {
+        -webkit-perspective: 200px;
+        -moz-perspective: 200px;
+        -ms-perspective: 200px;
+        -o-perspective: 200px;
+        perspective: 200px; }
+      .enabled3d .slide.perspective-slide .rotator {
+        -webkit-transform: rotateY(45deg);
+        -moz-transform: rotateY(45deg);
+        -ms-transform: rotateY(45deg);
+        -o-transform: rotateY(45deg);
+        transform: rotateY(45deg); }
+      
+      .slide.origin-slide .cube {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        top: 50%;
+        left: 50%;
+        margin: -100px 0 0 -100px; }
+      .slide.origin-slide .top, .slide.origin-slide .left, .slide.origin-slide .right, .slide.origin-slide .back, .slide.origin-slide .bottom {
+        top: 0;
+        left: 0;
+        position: absolute;
+        width: 196px;
+        height: 196px;
+        border: 2px solid #669900;
+        background: rgba(102, 153, 0, 0.2); }
+      .slide.origin-slide .left, .slide.origin-slide .right, .slide.origin-slide .bottom, .slide.origin-slide .back {
+        display: none; }
+      .slide.origin-slide .code {
+        margin-top: 325px;
+        text-align: center; }
+        .slide.origin-slide .code mark {
+          display: inline-block;
+          width: 198px; }
+      
+      .enabled3d .slide.origin-slide .cube {
+        -webkit-transform-style: preserve-3d;
+        -moz-transform-style: preserve-3d;
+        -ms-transform-style: preserve-3d;
+        -o-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+        -webkit-perspective: 200px;
+        -moz-perspective: 200px;
+        -ms-perspective: 200px;
+        -o-perspective: 200px;
+        perspective: 200px;
+        -webkit-perspective-origin: 50% 50%;
+        -moz-perspective-origin: 50% 50%;
+        -ms-perspective-origin: 50% 50%;
+        -o-perspective-origin: 50% 50%;
+        perspective-origin: 50% 50%;
+        -webkit-animation: slide-origin-perspective 4s infinite linear;
+        -moz-animation: slide-origin-perspective 4s infinite linear;
+        -ms-animation: slide-origin-perspective 4s infinite linear;
+        animation: slide-origin-perspective 4s infinite linear; }
+      .enabled3d .slide.origin-slide .top, .enabled3d .slide.origin-slide .left, .enabled3d .slide.origin-slide .right, .enabled3d .slide.origin-slide .bottom, .enabled3d .slide.origin-slide .back {
+        display: block; }
+      .enabled3d .slide.origin-slide .back {
+        top: 0;
+        left: 0;
+        width: 196px;
+        height: 196px;
+        border-width: 2px;
+        -webkit-transform: translateZ(-200px);
+        -moz-transform: translateZ(-200px);
+        -ms-transform: translateZ(-200px);
+        -o-transform: translateZ(-200px);
+        transform: translateZ(-200px); }
+      .enabled3d .slide.origin-slide .left {
+        left: -100px;
+        -webkit-transform: rotateY(90deg) translateX(100px);
+        -moz-transform: rotateY(90deg) translateX(100px);
+        -ms-transform: rotateY(90deg) translateX(100px);
+        -o-transform: rotateY(90deg) translateX(100px);
+        transform: rotateY(90deg) translateX(100px); }
+      .enabled3d .slide.origin-slide .right {
+        left: 100px;
+        -webkit-transform: rotateY(90deg) translateX(100px);
+        -moz-transform: rotateY(90deg) translateX(100px);
+        -ms-transform: rotateY(90deg) translateX(100px);
+        -o-transform: rotateY(90deg) translateX(100px);
+        transform: rotateY(90deg) translateX(100px); }
+      .enabled3d .slide.origin-slide .top {
+        top: -100px;
+        -webkit-transform: rotateX(90deg) translateY(-100px);
+        -moz-transform: rotateX(90deg) translateY(-100px);
+        -ms-transform: rotateX(90deg) translateY(-100px);
+        -o-transform: rotateX(90deg) translateY(-100px);
+        transform: rotateX(90deg) translateY(-100px); }
+      .enabled3d .slide.origin-slide .bottom {
+        top: 100px;
+        -webkit-transform: rotateX(90deg) translateY(-100px);
+        -moz-transform: rotateX(90deg) translateY(-100px);
+        -ms-transform: rotateX(90deg) translateY(-100px);
+        -o-transform: rotateX(90deg) translateY(-100px);
+        transform: rotateX(90deg) translateY(-100px); }
+      
+      @-moz-keyframes slide-origin-perspective {
+        from {
+          -moz-perspective-origin: 50% 50%;
+          perspective-origin: 50% 50%; }
+      
+        25% {
+          -moz-perspective-origin: 75% 75%;
+          perspective-origin: 75% 75%; }
+      
+        75% {
+          -moz-perspective-origin: 25% 25%;
+          perspective-origin: 25% 25%; }
+      
+        to {
+          -moz-perspective-origin: 50% 50%;
+          perspective-origin: 50% 50%; } }
+      
+      @-webkit-keyframes slide-origin-perspective {
+        from {
+          -webkit-perspective-origin: 50% 50%;
+          perspective-origin: 50% 50%; }
+      
+        25% {
+          -webkit-perspective-origin: 75% 75%;
+          perspective-origin: 75% 75%; }
+      
+        75% {
+          -webkit-perspective-origin: 25% 25%;
+          perspective-origin: 25% 25%; }
+      
+        to {
+          -webkit-perspective-origin: 50% 50%;
+          perspective-origin: 50% 50%; } }
+      
+      @-o-keyframes slide-origin-perspective {
+        from {
+          -o-perspective-origin: 50% 50%;
+          perspective-origin: 50% 50%; }
+      
+        25% {
+          -o-perspective-origin: 75% 75%;
+          perspective-origin: 75% 75%; }
+      
+        75% {
+          -o-perspective-origin: 25% 25%;
+          perspective-origin: 25% 25%; }
+      
+        to {
+          -o-perspective-origin: 50% 50%;
+          perspective-origin: 50% 50%; } }
+      
+      @-ms-keyframes slide-origin-perspective {
+        from {
+          -ms-perspective-origin: 50% 50%;
+          perspective-origin: 50% 50%; }
+      
+        25% {
+          -ms-perspective-origin: 75% 75%;
+          perspective-origin: 75% 75%; }
+      
+        75% {
+          -ms-perspective-origin: 25% 25%;
+          perspective-origin: 25% 25%; }
+      
+        to {
+          -ms-perspective-origin: 50% 50%;
+          perspective-origin: 50% 50%; } }
+      
+      @keyframes slide-origin-perspective {
+        from {
+          perspective-origin: 50% 50%; }
+      
+        25% {
+          perspective-origin: 75% 75%; }
+      
+        75% {
+          perspective-origin: 25% 25%; }
+      
+        to {
+          perspective-origin: 50% 50%; } }
+      
+      .slide.part3-slide h2 {
+        font-size: 65px;
+        text-shadow: black 1px 0 1px, black 0 1px 1px, black -1px 0 1px, black 0 -1px 1px; }
+      
+      .slide.download-slide a {
+        font-size: 50px;
+        text-decoration: none;
+        color: #0099cc;
+        border-bottom: 3px solid #0099cc; }
+      .slide.download-slide img {
+        position: absolute;
+        right: 260px;
+        bottom: 90px; }
+      
+      .slide.task-slide .rotate {
+        font-size: 55px;
+        position: absolute;
+        top: 353px;
+        left: 459px; }
+      .slide.task-slide .task:before, .slide.task-slide .task .hal9000:before, .slide.task-slide .task .love:before {
+        position: absolute;
+        top: 5px;
+        left: 10px;
+        font-size: 20px;
+        color: #666666;
+        font-family: "PT Sans", sans-serif; }
+      .slide.task-slide .task {
+        margin: 11px 0 0 0;
+        padding: 20px 0 20px 154px;
+        position: relative;
+        border: 1px solid #dddddd;
+        display: inline-block;
+        width: 637px; }
+        .slide.task-slide .task:before {
+          content: ".task"; }
+        .slide.task-slide .task .hal9000, .slide.task-slide .task .love {
+          float: left;
+          position: relative; }
+        .slide.task-slide .task .hal9000:before {
+          content: ".hal9000"; }
+        .slide.task-slide .task .love {
+          margin-left: 90px; }
+          .slide.task-slide .task .love:before {
+            content: ".love"; }
+      
+      .slide.detect-slide p, .slide.detect-slide pre {
+        margin-bottom: 40px; }
+      
+      .slide.compass-slide h2 {
+        margin-bottom: 40px; }
+      .slide.compass-slide pre.css {
+        position: absolute;
+        top: 170px;
+        left: 540px;
+        font-size: 20px; }
+        .slide.compass-slide pre.css code {
+          line-height: 30px; }
+      
+      .slide.states-slide h2 {
+        margin-bottom: 51px; }
+      .slide.states-slide pre {
+        font-size: 25px; }
+      .slide.states-slide code {
+        line-height: 40px; }
+      .slide.states-slide .task {
+        position: absolute;
+        top: 180px;
+        right: 90px;
+        width: 190px;
+        height: 190px; }
+        .slide.states-slide .task .love {
+          display: none; }
+      
+      .enabled3d .slide.states-slide .task .hal9000, .enabled3d .slide.states-slide .task .love {
+        position: absolute;
+        top: 0;
+        left: 0;
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+        -o-backface-visibility: hidden;
+        backface-visibility: hidden; }
+      .enabled3d .slide.states-slide .task .love {
+        display: block;
+        -webkit-transform: rotateY(-180deg);
+        -moz-transform: rotateY(-180deg);
+        -ms-transform: rotateY(-180deg);
+        -o-transform: rotateY(-180deg);
+        transform: rotateY(-180deg); }
+      .enabled3d .slide.states-slide .task.hovered .hal9000 {
+        -webkit-transform: rotateY(180deg);
+        -moz-transform: rotateY(180deg);
+        -ms-transform: rotateY(180deg);
+        -o-transform: rotateY(180deg);
+        transform: rotateY(180deg); }
+      .enabled3d .slide.states-slide .task.hovered .love {
+        -webkit-transform: rotateY(0);
+        -moz-transform: rotateY(0);
+        -ms-transform: rotateY(0);
+        -o-transform: rotateY(0);
+        transform: rotateY(0); }
+      
+      .slide.animation3d-slide .task {
+        position: absolute;
+        top: 215px;
+        right: 90px; }
+        .slide.animation3d-slide .task .love {
+          display: none; }
+      
+      .enabled3d .slide.animation3d-slide .task {
+        -webkit-perspective: 500px;
+        -moz-perspective: 500px;
+        -ms-perspective: 500px;
+        -o-perspective: 500px;
+        perspective: 500px;
+        width: 190px;
+        height: 190px; }
+        .enabled3d .slide.animation3d-slide .task .hal9000, .enabled3d .slide.animation3d-slide .task .love {
+          position: absolute;
+          top: 0;
+          left: 0;
+          -webkit-backface-visibility: hidden;
+          -moz-backface-visibility: hidden;
+          -ms-backface-visibility: hidden;
+          -o-backface-visibility: hidden;
+          backface-visibility: hidden;
+          -webkit-transition: none 1s linear;
+          -moz-transition: none 1s linear;
+          -ms-transition: none 1s linear;
+          -o-transition: none 1s linear;
+          transition: none 1s linear;
+          -webkit-transition-property: -webkit-transform;
+          -moz-transition-property: -moz-transform;
+          -ms-transition-property: -ms-transform;
+          -o-transition-property: -o-transform;
+          transition-property: transform; }
+        .enabled3d .slide.animation3d-slide .task .love {
+          display: block;
+          -webkit-transform: rotateY(-180deg);
+          -moz-transform: rotateY(-180deg);
+          -ms-transform: rotateY(-180deg);
+          -o-transform: rotateY(-180deg);
+          transform: rotateY(-180deg); }
+        .enabled3d .slide.animation3d-slide .task.hovered .hal9000 {
+          -webkit-transform: rotateY(180deg);
+          -moz-transform: rotateY(180deg);
+          -ms-transform: rotateY(180deg);
+          -o-transform: rotateY(180deg);
+          transform: rotateY(180deg); }
+        .enabled3d .slide.animation3d-slide .task.hovered .love {
+          -webkit-transform: rotateY(0);
+          -moz-transform: rotateY(0);
+          -ms-transform: rotateY(0);
+          -o-transform: rotateY(0);
+          transform: rotateY(0); }
+      
+      .slide.compare-slide p, .slide.compare-slide .task {
+        position: absolute; }
+      .slide.compare-slide p {
+        top: 202px; }
+      .slide.compare-slide .task {
+        top: 262px; }
+        .slide.compare-slide .task .love {
+          display: none; }
+      .slide.compare-slide .cool {
+        left: 400px; }
+      
+      .enabled3d .slide.compare-slide .task {
+        -webkit-perspective: 500px;
+        -moz-perspective: 500px;
+        -ms-perspective: 500px;
+        -o-perspective: 500px;
+        perspective: 500px;
+        width: 190px;
+        height: 190px; }
+        .enabled3d .slide.compare-slide .task .hal9000, .enabled3d .slide.compare-slide .task .love {
+          position: absolute;
+          top: 0;
+          left: 0;
+          -webkit-backface-visibility: hidden;
+          -moz-backface-visibility: hidden;
+          -ms-backface-visibility: hidden;
+          -o-backface-visibility: hidden;
+          backface-visibility: hidden;
+          -webkit-transition: none 1.9s linear;
+          -moz-transition: none 1.9s linear;
+          -ms-transition: none 1.9s linear;
+          -o-transition: none 1.9s linear;
+          transition: none 1.9s linear;
+          -webkit-transition-property: -webkit-transform;
+          -moz-transition-property: -moz-transform;
+          -ms-transition-property: -ms-transform;
+          -o-transition-property: -o-transform;
+          transition-property: transform; }
+        .enabled3d .slide.compare-slide .task .love {
+          display: block;
+          -webkit-transform: rotateY(-180deg);
+          -moz-transform: rotateY(-180deg);
+          -ms-transform: rotateY(-180deg);
+          -o-transform: rotateY(-180deg);
+          transform: rotateY(-180deg); }
+      .enabled3d .slide.compare-slide .task:hover .hal9000, .enabled3d .slide.compare-slide .task.hovered .hal9000 {
+        -webkit-transform: rotateY(180deg);
+        -moz-transform: rotateY(180deg);
+        -ms-transform: rotateY(180deg);
+        -o-transform: rotateY(180deg);
+        transform: rotateY(180deg); }
+      .enabled3d .slide.compare-slide .task:hover .love, .enabled3d .slide.compare-slide .task.hovered .love {
+        -webkit-transform: rotateY(0);
+        -moz-transform: rotateY(0);
+        -ms-transform: rotateY(0);
+        -o-transform: rotateY(0);
+        transform: rotateY(0); }
+      .enabled3d .slide.compare-slide .task.cool .hal9000, .enabled3d .slide.compare-slide .task.cool .love {
+        -webkit-transition: none 1.9s cubic-bezier(0.680, -0.550, 0.265, 1.550);
+        -moz-transition: none 1.9s cubic-bezier(0.680, -0.550, 0.265, 1.550);
+        -ms-transition: none 1.9s cubic-bezier(0.680, -0.550, 0.265, 1.550);
+        -o-transition: none 1.9s cubic-bezier(0.680, -0.550, 0.265, 1.550);
+        transition: none 1.9s cubic-bezier(0.680, -0.550, 0.265, 1.550);
+        -webkit-transition-property: -webkit-transform, background;
+        -moz-transition-property: -moz-transform, background;
+        -ms-transition-property: -ms-transform, background;
+        -o-transition-property: -o-transform, background;
+        transition-property: "transform, background"; }
+      .enabled3d .slide.compare-slide .task.cool.hovered .hal9000, .enabled3d .slide.compare-slide .task.cool .love {
+        background-color: #bbbbbb; }
+      .enabled3d .slide.compare-slide .task.cool .hal9000, .enabled3d .slide.compare-slide .task.cool.hovered .love {
+        background-color: white; }
+      
+      .slide.part4-slide h2 {
+        color: black;
+        font-size: 65px;
+        text-shadow: white 1px 0 1px, white 0 1px 1px, white -1px 0 1px, white 0 -1px 1px;
+        margin-top: 395px; }
+      
+      .slide.shaders-slide img {
+        margin-top: 20px; }
+      
+      .slide.webcl-slide p {
+        margin-right: 200px; }
+      
+      .slide.japans-slide img.cover {
+        height: 100%;
+        left: auto;
+        right: 0;
+        clip: none; }
+      .slide.japans-slide h2 {
+        margin-top: 70px;
+        font-size: 65px;
+        width: 350px; }
+      
+      .slide.end-slide h2 {
+        font-size: 65px;
+        text-shadow: black 1px 0 1px, black 0 1px 1px, black -1px 0 1px, black 0 -1px 1px; }
+      .slide.end-slide .download {
+        position: absolute;
+        bottom: 10px;
+        left: 65px;
+        text-align: center; }
+        .slide.end-slide .download a {
+          color: white;
+          text-decoration: none;
+          text-shadow: black 1px 0 1px, black 0 1px 1px, black -1px 0 1px, black 0 -1px 1px; }
+        .slide.end-slide .download .qr {
+          margin-top: -30px;
+          width: 216px;
+          height: 216px;
+          background: url('slides/49_end/qr.png') no-repeat;
+          -webkit-transform: scale(0.7, 0.7);
+          -moz-transform: scale(0.7, 0.7);
+          -ms-transform: scale(0.7, 0.7);
+          -o-transform: scale(0.7, 0.7);
+          transform: scale(0.7, 0.7); }
+      .slide.end-slide .logo {
+        position: absolute;
+        bottom: 35px;
+        right: 35px;
+        width: 150px;
+        height: 139px;
+        background: url('slides/49_end/logo.png') no-repeat; }
+    </style>
+  </head>
+  <body class='list'>
+    <header class='caption'>
+      <h1>Вращай, двигай, загибай — практика 3D в Вебе</h1>
+      <p>
+        <a href="http://sitnik.ru/">Андрей Ситник</a>,
+        <a href="evilmartians.ru">Злые марсиане</a>
+      </p>
+    </header>
+    <section class='cover cover-slide slide use3d' id='1'>
+      <h2>Вращай, двигай, загибай — практика 3D в Вебе</h2>
+      <img src="slides/01_cover/space.jpg" class="cover" alt="" /><div class='orbit'>
+        <div class='monolith'>
+          <div class='top'></div>
+          <div class='left'>
+            <div class='light'></div>
+          </div>
+          <div class='front'>
+            <div class='light'></div>
+          </div>
+          <div class='right'>
+            <div class='light'></div>
+          </div>
+          <div class='back'>
+            <div class='light'></div>
+          </div>
+          <div class='bottom'></div>
+        </div>
+      </div>
+    </section>
+    <section class='author-slide cover slide' id='2'>
+      <h2>Андрей «A.I.» Ситник</h2>
+      <img src="slides/02_author/space.jpg" class="cover" alt="" /><div class='contacts'>
+        <a href='http://sitnik.ru'>
+          <span>sitnik.ru</span>
+        </a>
+        <a href='http://twitter.com/andrey_sitnik'>
+          @<span>andrey_sitnik</span>
+        </a>
+      </div>
+      <a class='martians' href='http://evilmartians.ru/'>
+        <div class='arrow'>←</div>
+        <span>Злые марсиане</span>
+        <div class='icon'></div>
+      </a>
+    </section>
+    <section class='slide support-slide' id='3'>
+      <h2>Поддержка 3D-трансформаций</h2>
+      <div class='browsers'>
+        <div class='browser'>
+          <img src="slides/03_support/chrome.png" alt="" />
+          <div class='version'>12</div>
+        </div>
+        <div class='browser'>
+          <img src="slides/03_support/mozilla.png" alt="" />
+          <div class='icon'></div>
+          <div class='version'>10</div>
+        </div>
+        <div class='browser msie'>
+          <img src="slides/03_support/msie.png" alt="" />
+          <div class='icon'></div>
+          <div class='version'>10</div>
+        </div>
+        <div class='browser ios'>
+          <img src="slides/03_support/ios.png" alt="" />
+          <div class='icon'></div>
+          <div class='version'>3.2</div>
+        </div>
+        <div class='browser android'>
+          <img src="slides/03_support/android.png" alt="" />
+          <div class='icon'></div>
+          <div class='version'>3.0</div>
+        </div>
+        <div class='browser unsupported'>
+          <img src="slides/03_support/opera.png" alt="" />
+          <div class='icon'></div>
+          <div class='version'>12?</div>
+        </div>
+      </div>
+    </section>
+    <section class='cover slide yes-slide' id='4'>
+      <h2>3D уже здесь</h2>
+      <img src="slides/04_yes/3d.gif" class="cover gif" alt="" />
+    </section>
+    <section class='cover part1-slide slide' id='5'>
+      <h2>Часть 1. Зачем?</h2>
+      <img src="slides/05_part1/monkeys.jpg" class="cover" alt="" />
+    </section>
+    <section class='cover history90-slide slide' id='6'>
+      <h2>3D-интерфейс по мнению 90-х</h2>
+      <img src="slides/06_history90/hackers.jpg" class="cover" alt="" />
+    </section>
+    <section class='cover history00-slide slide' id='7'>
+      <h2>3D-веб по мнению 2000-х</h2>
+      <img src="slides/07_history00/history00.jpg" class="cover" alt="" />
+    </section>
+    <section class='metro-slide slide' id='8'>
+      <h2>Metro: Windows Phone и Windows 8</h2>
+      <ul>
+        <li>
+          Мало градиентов, скруглений, бликов
+        </li>
+        <li>
+          3D-анимации переходов между окнами
+        </li>
+        <li>
+          <a href="http://m.microsoft.com/windowsphone/en-us/demo/index.html#home">Демо</a>,
+          <a href='http://www.youtube.com/watch?v=wlJ_fLPpmdM'>Видео</a>
+        </li>
+      </ul>
+      <figure>
+        <img src="slides/08_metro/click.png" alt="" />
+        <figcaption>Прогибание иконки при нажатии</figcaption>
+      </figure>
+    </section>
+    <section class='android-slide slide' id='9'>
+      <h2>Android 4</h2>
+      <ul>
+        <li>
+          В Android ICS новый дизайн
+        </li>
+        <li>
+          Меньше градиентов и бликов
+        </li>
+        <li>
+          3D-эффекты — стандартный язык интерфейсы из руководства по дизайну
+        </li>
+      </ul>
+      <figure>
+        <img src="slides/09_android/slide.png" alt="" />
+        <figcaption>«Дальше листать некуда»</figcaption>
+      </figure>
+    </section>
+    <section class='shout slide why-slide' id='10'>
+      <h2>Зачем верстальщику думать о дизайне?</h2>
+      
+    </section>
+    <section class='slide translator-slide' id='11'>
+      <h2>Верстальщик — это переводчик</h2>
+      <div class='translation'>
+        <div class='designer'>
+          Дизайнер
+          <div class='arrow'>→</div>
+        </div>
+        <div class='frontend'>
+          Верстальщик
+          <div class='arrow'>→</div>
+        </div>
+        <div class='programmer'>
+          Программист
+        </div>
+      </div>
+    </section>
+    <section class='designer-slide slide' id='12'>
+      <h2>Верстальщик — тоже дизайнер</h2>
+      <ul>
+        <li>
+          <mark>Анимации и эффекты</mark>
+        </li>
+        <li>
+          Деградирование в старых браузерах
+        </li>
+        <li class='quotes-first'>
+          «Константин Константинопольский»
+        </li>
+      </ul>
+    </section>
+    <section class='design-slide shout slide' id='13'>
+      <h2>Дизайн — это передача информации и эмоций</h2>
+      
+    </section>
+    <section class='animation-slide slide' id='14'>
+      <h2>Анимация</h2>
+      <ul>
+        <li>Объекты меняются медленно, как в реальном мире</li>
+        <li>Нет мгновенный изменений, пугающих пользователя</li>
+        <li>Дополнительный канал информации</li>
+      </ul>
+    </section>
+    <section class='shout slide useful-slide' id='15'>
+      <h2>Анимация не только красива, но и полезна</h2>
+      
+    </section>
+    <section class='book-slide slide' id='16'>
+      <h2>Пример — книга</h2>
+      <div class='demo'>
+        <p>
+          Анимация открывающейся обложки создаёт ощущение книги или дневника.
+        </p>
+        <p>
+          <a href='http://insomnis.ru'>insomnis.ru</a>
+        </p>
+      </div>
+    </section>
+    <section class='opensource-slide slide' id='17'>
+      <h2>Пример — уголок</h2>
+      <div class='demo'>
+        <p>
+          Загибающийся уголок с исходным кодом под ним — очевидная метафора ссылки
+          на исходный код страницы
+        </p>
+        <p>
+          <a href='http://easings.net'>easings.net</a>
+        </p>
+      </div>
+    </section>
+    <section class='flip-slide slide' id='18'>
+      <h2>Пример — переворот</h2>
+      <div class='demo'>
+        <p>
+          Переворот — отличная анимация для смены одного объекта на другой.
+          Вспомните сказки — «обратилась в птицу».
+        </p>
+        <p>
+          <a href='http://groupon.ru/gift_cards'>groupon.ru/gift_cards</a>
+        </p>
+      </div>
+    </section>
+    <section class='album-slide slide' id='19'>
+      <h2>Пример — альбом</h2>
+      <div class='demo'>
+        <p>
+          Можно обыграть аллюзию на настоящую обложку альбома со списком песен на
+          другой стороне
+        </p>
+        <p>
+          <a href='http://dachip.com/download.html'>dachip.com/download.html</a>
+        </p>
+      </div>
+    </section>
+    <section class='cover part2-slide slide' id='20'>
+      <h2>Часть 2. Теория</h2>
+      <img src="slides/20_part2/discus.jpg" class="cover" alt="" />
+    </section>
+    <section class='slide transform-slide' id='21'>
+      <h2>CSS Transforms</h2>
+      <pre><code>transform: <mark>команда</mark> <mark>команда</mark> …;</code>
+      <div class='prefixes'>
+        <code><em>-o-</em>transform: команда команда …;</code>
+        <code><em>-ms-</em>transform: команда команда …;</code>
+        <code><em>-moz-</em>transform: команда команда …;</code>
+        <code><em>-webkit-</em>transform: команда команда …;</code>
+      </div></pre>
+    </section>
+    <section class='slide transform2d-slide' id='22'>
+      <h2>CSS 2D Transforms</h2>
+      <div class='transform'>
+        <code><span>transform:</span> rotate(45deg)</code>
+        <div class='example origin'></div>
+        <div class='example rotate'></div>
+      </div>
+      <div class='transform'>
+        <code><span>transform:</span> translateX(60px)</code>
+        <div class='example origin'></div>
+        <div class='example translate'></div>
+      </div>
+      <div class='transform'>
+        <code><span>transform:</span> skewY(20px)</code>
+        <div class='example origin'></div>
+        <div class='example skew'></div>
+      </div>
+      <div class='transform'>
+        <code><span>transform:</span> scale(0.5)</code>
+        <div class='example origin'></div>
+        <div class='example scale'></div>
+      </div>
+    </section>
+    <section class='slide transform3d-slide' id='23'>
+      <h2>CSS 3D Transforms</h2>
+      <p>Новые команды для работы в трёхмерном пространстве:</p>
+      <ul>
+        <li>
+          <code>rotateX</code>, <code>rotateY</code> и <code>rotate3d</code>
+        </li>
+        <li>
+          <code>translateZ</code>
+        </li>
+        <li>
+          <code>skewZ</code>
+        </li>
+        <li>
+          <code>scaleZ</code>
+        </li>
+        <li>
+          <code>matrix3d</code>
+        </li>
+      </ul>
+    </section>
+    <section class='rotate-slide slide use3d' id='24'>
+      <h2>Вращение</h2>
+      <div class='rotation'>
+        <code><span>transform:</span> rotateX(45deg)</code>
+        <div class='example rotatex'>
+          <div class='rotator'>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+      <div class='rotation'>
+        <code><span>transform:</span> rotateY(45deg)</code>
+        <div class='example rotatey'>
+          <div class='rotator'>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+      <div class='rotation'>
+        <code><span>transform:</span> rotate3d(<span class="x">2</span>, <span class="y">3</span>, <span class="z">1</span>, 30deg)</code>
+        <div class='label x'>x</div>
+        <div class='label y'>y</div>
+        <div class='label z'>z</div>
+        <div class='angle x'>60<span>deg</span></div>
+        <div class='angle y'>90<span>deg</span></div>
+        <div class='angle z'>30<span>deg</span></div>
+        <div class='eql x'>=</div>
+        <div class='eql y'>=</div>
+        <div class='eql z'>=</div>
+        <div class='example rotate3d'>
+          <div class='rotator'>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class='slide translate-slide use3d' id='25'>
+      <h2>Перемещение</h2>
+      <div class='translate'>
+        <div class='example translateZ'>
+          <div class='rotator'>
+            <div class='origin'></div>
+            <div class='changed'>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+        <code><span>transform:</span> translateZ(50px)</code>
+      </div>
+      <div class='translate'>
+        <div class='example translateX'>
+          <div class='rotator'>
+            <div class='origin'></div>
+            <div class='changed'>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+        <code><span>transform:</span> translateX(50%)</code>
+      </div>
+    </section>
+    <section class='backface-slide slide use3d' id='26'>
+      <h2>Видимость обратной стороны</h2>
+      <div class='example'>
+        <div class='perspective'>
+          <div class='rotator'>
+            <div class='img'></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+        <code>backface-visibility: visible</code>
+      </div>
+      <div class='example'>
+        <div class='perspective'>
+          <div class='rotator hidden'>
+            <div class='img'></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+        <code>backface-visibility: hidden</code>
+      </div>
+    </section>
+    <section class='perspective-slide slide use3d' id='27'>
+      <h2>Перспектива</h2>
+      <div class='perspective'>
+        <div class='example big'>
+          <div class='rotator'>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+        <pre><code>perspective: <mark>2000px</mark></code>
+        <code>transform: rotateY(45deg)</code></pre>
+      </div>
+      <div class='perspective'>
+        <div class='example small'>
+          <div class='rotator'>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+        <pre><code>perspective: <mark>200px</mark></code>
+        <code>transform: rotateY(45deg)</code></pre>
+      </div>
+    </section>
+    <section class='origin-slide slide use3d' id='28'>
+      <h2>Положение перспективы</h2>
+      <div class='cube'>
+        <div class='top'></div>
+        <div class='left'></div>
+        <div class='back'></div>
+        <div class='right'></div>
+        <div class='bottom'></div>
+      </div>
+      <div class='code'>
+        <code>perspective-origin: <mark>50% 50%</mark></code>
+      </div>
+    </section>
+    <section class='slide style-slide' id='29'>
+      <h2>Статус потомков</h2>
+      <p>
+        Нужно выставить
+        <code>tranform-style: <mark>preserve-3d</mark></code>
+        если потомки, тоже будут иметь 3D-преобразования
+        (<nobr>по-умолчанию, <code>flat</code></nobr>)
+      </p>
+    </section>
+    <section class='cover part3-slide slide' id='30'>
+      <h2>Часть 3. Практика</h2>
+      <img src="slides/30_part3/work.jpg" class="cover" alt="" />
+    </section>
+    <section class='download-slide slide' id='31'>
+      <h2>Скачать как учебник</h2>
+      <p>
+        Повторите шаги практики дома на своих проектах.
+      </p>
+      <p>
+        <a href='http://evl.ms/rit3d'>evl.ms/rit3d</a>
+      </p>
+      <img src="slides/31_download/qr.png" alt="QR-код со ссылкой на загрузку" />
+    </section>
+    <section class='slide task-slide' id='32'>
+      <h2>Задача</h2>
+      <p>При наведении перевернуть фотографию и показать оборот</p>
+      <div class='rotate'>↺</div>
+      <div class='task'>
+        <div class='hal9000'></div>
+        <div class='love'>
+          <em>HAL 9000</em>
+          любит всех
+        </div>
+      </div>
+    </section>
+    <section class='detect-slide slide' id='33'>
+      <h2>Шаг 1. Определяем поддержку 3D</h2>
+      <p>
+        Поддержка 3D зависит не только от браузера, но и от видеокарты →
+        используйте
+        <a href='http://modernizr.com/'>Modernizr</a>
+      </p>
+      <pre><code><mark>.csstransforms3d</mark> .task { … }</code></pre>
+      <pre><code>if ( Modernizr.<mark>csstransforms3d</mark> ) { … }</code></pre>
+    </section>
+    <section class='compass-slide slide' id='34'>
+      <h2>Шаг 2. Боремся с префиксами. Sass и Compass</h2>
+      <pre class='sass'><code>.task</code>
+      <code>  +rotateY(180deg)</code>
+      <code>  +transition(all 1s)</code></pre>
+      <pre class='css'><code>.task {</code>
+      <code>  -webkit-transform: rotateY(180deg);</code>
+      <code>  -moz-transform: rotateY(180deg);</code>
+      <code>  -ms-transform: rotateY(180deg);</code>
+      <code>  -o-transform: rotateY(180deg);</code>
+      <code>  transform: rotateY(180deg);</code>
+      <code>  -webkit-transition: all 1s;</code>
+      <code>  -moz-transition: all 1s;</code>
+      <code>  -ms-transition: all 1s;</code>
+      <code>  -o-transition: all 1s;</code>
+      <code>  transition: all 1s;</code></pre>
+    </section>
+    <section class='slide states-slide use3d' id='35'>
+      <h2>Шаг 3. Устанавливаем состояния</h2>
+      <pre><code>.task .hal9000, .task .love</code>
+      <code>  +backface-visibility(hidden)</code>
+      <code>.task .love</code>
+      <code>  +rotateY(180deg)</code>
+      <code>.task<mark>:hover</mark> .hal9000</code>
+      <code>  +rotateY(-180deg)</code>
+      <code>.task<mark>:hover</mark> .love</code>
+      <code>  +rotateY(0)</code></pre>
+      <div class='task animate-hover'>
+        <div class='hal9000'></div>
+        <div class='love'>
+          <em>HAL 9000</em>
+          любит всех
+        </div>
+      </div>
+    </section>
+    <section class='jquery-slide slide' id='36'>
+      <h2>jQuery и 3D-анимация</h2>
+      <p>
+        Устанавливаем расширение
+        <a href="https://github.com/sproutcore/TransformJS">TransformJS</a>:
+      </p>
+      <pre><code>hal9000.animate({ rotateY: 0 }, 600);</code></pre>
+    </section>
+    <section class='slide transition-slide' id='37'>
+      <h2>Почему CSS Transitions лучше для анимаций</h2>
+      <ul>
+        <li>
+          Стили документа и стили анимаций идут вместе в одном файле
+        </li>
+        <li>
+          Они сами учтут коллизии и прерывания анимации
+        </li>
+        <li>
+          CSS Transitions рисует анимации быстрее
+        </li>
+        <li>
+          Гораздо проще и меньше кода
+        </li>
+      </ul>
+    </section>
+    <section class='animation3d-slide slide use3d' id='38'>
+      <h2>Шаг 4. Добавляем анимации</h2>
+      <pre><code>.task .hal9000, .task .love</code>
+      <code>  +transition(all 1s linear)</code></pre>
+      <div class='task animate-hover'>
+        <div class='hal9000'></div>
+        <div class='love'>
+          <em>HAL 9000</em>
+          любит всех
+        </div>
+      </div>
+    </section>
+    <section class='light-slide slide' id='39'>
+      <h2>Шаг 5. Свет</h2>
+      <pre><code>.task .love, .task:hover .hal9000</code>
+      <code>  <mark>background-color: #ccc</mark></code>
+      <code>.task:hover .love, .task .hal9000</code>
+      <code>  <mark>background-color: white</mark></code></pre>
+    </section>
+    <section class='easing-slide slide' id='40'>
+      <h2>Шаг 6. Easing-функция</h2>
+      <ol>
+        <li>
+          Выбираем нужный ход анимации на
+          <a href='http://easings.net'>easings.net</a>
+          <nobr>
+            или
+            <a href='http://cubic-bezier.com/'>cubic-bezier.com</a>
+          </nobr>
+        </li>
+        <li>
+          Ставим расширение
+          <a href='http://thesassway.com/projects/compass-ceaser'>Compass Ceaser</a>
+          или прописываем ход анимации через
+          кривую Безье
+        </li>
+        <li>
+          Обновляем transition-свойство:
+          <code>+transition(all 1s <mark>ceaser('easeInOutBack')</mark>)</code>
+        </li>
+      </ol>
+    </section>
+    <section class='compare-slide slide use3d' id='41'>
+      <h2>Сравниваем улучшения</h2>
+      <p>
+        Без улучшений
+      </p>
+      <p class='cool'>
+        Со светом и easing
+      </p>
+      <div class='task animate-hover'>
+        <div class='hal9000'></div>
+        <div class='love'>
+          <em>HAL 9000</em>
+          любит всех
+        </div>
+      </div>
+      <div class='task cool animate-hover'>
+        <div class='hal9000'>
+          <div class='light'></div>
+        </div>
+        <div class='love'>
+          <div class='light'></div>
+          <em>HAL 9000</em>
+          любит всех
+        </div>
+      </div>
+    </section>
+    <section class='degradation-slide slide' id='42'>
+      <h2>Шаг 7. Старые браузеры</h2>
+      <pre><code><mark>.no-csstransforms3d</mark> .task .love</code>
+      <code>  display: none</code>
+      <code><mark>.no-csstransforms3d</mark> .hal9000</code>
+      <code>  display: none</code>
+      <code><mark>.no-csstransforms3d</mark> .love</code>
+      <code>  display: block</code></pre>
+    </section>
+    <section class='cover part4-slide slide' id='43'>
+      <h2>Часть 4. Будущее</h2>
+      <img src="slides/43_part4/future.jpg" class="cover" alt="" />
+    </section>
+    <section class='slide webgl-slide' id='44'>
+      <h2>WebGL</h2>
+      <p>
+        WebGL — передача низкоуровневых OpenGL-комманд видеокарте
+        напрямую из JavaScript. Как <code>&lt;canvas&gt;</code> для 3D.
+      </p>
+      <p>
+        WebGL: игры, 360°-обзоров товаров, трёхмерные графики.
+      </p>
+      <p>
+        CSS 3D Transforms: анимации, эффекты с обычной страницей.
+      </p>
+    </section>
+    <section class='gldemos-slide slide' id='45'>
+      <h2>Примеры WebGL</h2>
+      <ul>
+        <li>
+          <a href='http://madebyevan.com/webgl-water/'>
+            Динамическое освещение и вода
+          </a>
+        </li>
+        <li>
+          <a href='https://chrome.google.com/webstore/detail/hdahlabpinmfcemhcbcfoijcpoalfgdn'>
+            Игра с огромными человекоподобными роботами
+          </a>
+        </li>
+        <li>
+          <a href='http://www.google.ru/nexus/'>
+            Обзор телефона
+          </a>
+        </li>
+        <li>
+          <a href='https://www.google.com/search?q=tan(abs(x/2)%2Babs(y/2))'>
+            График функции в Google
+          </a>
+        </li>
+      </ul>
+    </section>
+    <section class='shaders-slide slide' id='46'>
+      <h2>Шейдеры из CSS-фильтров</h2>
+      <p>
+        Можно будет указывать, как изгибать любой блок
+      </p>
+      <img src="slides/45_shaders/shaders.jpg" alt="" />
+    </section>
+    <section class='shadersdemo-slide slide' id='47'>
+      <h2>Пример шейдеров</h2>
+      <p>Обычный HTML-блок Google Maps и немного шейдеров:</p>
+      <img src="slides/46_shadersdemo/map.png" alt="" />
+    </section>
+    <section class='slide webcl-slide' id='48'>
+      <h2>WebCL</h2>
+      <p>
+        На некоторых задачах видеокарта в несколько сот раз быстрее процессора.
+      </p>
+      <p>
+        WebCL позволяет производить такие вычисления на видеокарте из JavaScript.
+      </p>
+    </section>
+    <section class='cover japans-slide slide' id='49'>
+      <h2>Японцы ждут тебя в прекрасном мире 3D</h2>
+      <img src="slides/48_japans/japans.gif" class="cover gif" alt="" />
+    </section>
+    <section class='cover end-slide slide' id='50'>
+      <h2>Вопросы</h2>
+      <img src="slides/49_end/end.jpg" class="cover" alt="" /><div class='download'>
+        <a href='evl.ms/rit3d'>evl.ms/rit3d</a>
+        <div class='qr'></div>
+      </div>
+      <div class='logo'></div>
+    </section>
+    <div class='progress'>
+      <div></div>
+    </div>
+    <script>
+      (function(){function i(){var a=Math.max(b.clientWidth/window.innerWidth,b.clientHeight/window.innerHeight);return"scale("+1/a+")"}function j(a){b.style.WebkitTransform=a,b.style.MozTransform=a,b.style.msTransform=a,b.style.OTransform=a,b.style.transform=a}function k(){b.classList.remove("list"),b.classList.add("full"),j(i())}function l(){b.classList.remove("full"),b.classList.add("list"),j("none")}function m(){var b,c=e.length,d=a.hash.substr(1);for(b=0;b<c;++b)if(d===e[b].id)return b;return-1}function n(a){if(-1===a)return;var b=document.getElementById(e[a].id);null!=b&&window.scrollTo(0,b.offsetTop)}function o(){return"full"!==a.search.substr(1)}function p(a){return 0>a?e.length-1:e.length<=a?0:a}function q(a){if(null===d)return;d.style.width=(100/(e.length-1)*p(a)).toFixed(2)+"%"}function r(a){var b,c=e.length,d;a=p(a);for(b=0;b<c;++b)d=document.getElementById(e[b].id),b<a?(d.classList.remove("current"),d.classList.add("passed")):b>a?(d.classList.remove("passed"),d.classList.remove("current")):(d.classList.remove("passed"),d.classList.add("current"))}function s(a){return"#"+e[p(a)].id}function t(b){a.hash=s(b),o()||(q(b),r(b))}function u(a){var b=a;while("BODY"!==b.nodeName&&"HTML"!==b.nodeName){if(b.classList.contains("slide"))return b.id;b=b.parentNode}return""}function v(b){var c=u(b.target);""!==c&&o()&&(b.preventDefault(),a.hash="#"+c,history.replaceState(null,null,a.pathname+"?full#"+c),k(),q(m()),r(m()),w(m()))}function w(a){a=p(a),clearTimeout(f);if(e[a].hasTiming){var b=document.getElementById(e[a].id).dataset.timing.split(":");b=parseInt(b[0])*60*1e3+parseInt(b[1])*1e3,f=setTimeout(function(){t(a+1),w(a+1)},b)}}function x(a){if(!0!==e[a].hasInnerNavigation)return-1;var b=document.getElementById(e[a].id).querySelectorAll(".next:not(.active)"),c;return 0!==b.length?(c=b[0],c.classList.add("active"),b.length-1):-1}var a=window.location,b=document.body,c=document.querySelectorAll(".slide"),d=document.querySelector("div.progress div"),e=[],f,g=c.length,h;for(h=0;h<g;h++)c[h].id||(c[h].id=h+1),e.push({id:c[h].id,hasInnerNavigation:null!==c[h].querySelector(".next"),hasTiming:null!=c[h].dataset.timing});window.addEventListener("DOMContentLoaded",function(){o()||(-1===m()&&history.replaceState(null,null,a.pathname+"?full"+s(0)),k(),q(m()),r(m()),w(m()))},!1),window.addEventListener("popstate",function(a){o()?(l(),n(m())):k()},!1),window.addEventListener("resize",function(a){o()||j(i())},!1),document.addEventListener("keydown",function(b){if(b.altKey||b.ctrlKey||b.metaKey)return;var c=m(),d=!0;switch(b.which){case 116:case 13:o()&&-1!==c&&(b.preventDefault(),history.pushState(null,null,a.pathname+"?full"+s(c)),k(),q(c),r(c),w(c));break;case 27:o()||(b.preventDefault(),history.pushState(null,null,a.pathname+s(c)),l(),n(c));break;case 33:case 38:case 37:case 72:case 75:b.preventDefault(),c--,t(c);break;case 34:case 40:case 39:case 76:case 74:b.preventDefault(),o()?d=!0:d=!e[c].hasInnerNavigation||-1===x(c);if(-1===c||d)c++,t(c),o()||w(c);break;case 36:b.preventDefault(),c=0,t(c);break;case 35:b.preventDefault(),c=e.length-1,t(c);break;case 9:case 32:b.preventDefault(),c+=b.shiftKey?-1:1,t(c);break;default:}},!1),document.addEventListener("click",v,!1),document.addEventListener("touchend",v,!1),document.addEventListener("touchstart",function(a){if(!o()){var b=m(),c=a.touches[0].pageX;c>window.innerWidth/2?b++:b--,t(b)}},!1),document.addEventListener("touchmove",function(a){o()||a.preventDefault()},!1)})(),function(){var a,b;a=function(a,b){return setTimeout(b,a)},b=function(a,b){return setInterval(b,a)},window.presentation={slide:function(a,b){return jQuery(function(){var c,d;return d=$(".slide."+a+"-slide"),d.open=function(b){return presentation.onSlide(function(c){if(c.hasClass(""+a+"-slide"))return b()})},d.close=function(b){return presentation.onList(b),presentation.onSlide(function(c){if(!c.hasClass(""+a+"-slide"))return b()})},d.every=function(a,b){return d.open(function(){return d.watcher=setInterval(b,100)}),d.close(function(){if(d.watcher)return clearInterval(d.watcher)})},c=function(a){return $(a,d)},b($,c,d)})},prefix:function(){if($.browser.mozilla)return"moz";if($.browser.webkit)return"webkit";if($.browser.opera)return"o";if($.browser.msie)return"ms"}},jQuery(function(c){var d,e,f,g,h,i,j,k,l,m,n,o,p,q;c("a[href^=http]").attr({target:"_blank"}),l=jQuery.Callbacks(),d=jQuery.Callbacks(),g=jQuery.Callbacks(),h=!1,e=null,m=function(){d.fire();if(location.search==="?full"){h=!1;if(e!==location.hash)return e=location.hash,l.fire(c(location.hash))}else{e=null;if(!h)return h=!0,g.fire()}},k={},q=["pushState","replaceState"],n=function(a){return k[a]=history[a],history[a]=function(){return k[a].apply(history,arguments),m()}};for(o=0,p=q.length;o<p;o++)i=q[o],n(i);return c(window).on("popstate",m),c(window).on("hashchange",m),presentation.onSlide=function(a){return l.add(a)},presentation.onClose=function(a){return g.add(a)},presentation.onList=function(a){return g.add(a)},j=!1,presentation.onSlide(function(a){return a.hasClass("use3d")?c("body").addClass("enabled3d"):c("body").removeClass("enabled3d")}),presentation.onList(function(){return c("body").removeClass("enabled3d")}),a(500,function(){return c("img.gif").each(function(){var a,b,d;d=c(this),a=document.createElement("canvas"),a.width=this.width,a.height=this.height,a.getContext("2d").drawImage(this,0,0,a.width,a.height),b=c("<img />").attr({"class":d.attr("class")}).removeClass("gif").addClass("disabled-gif");try{return b[0].src=a.toDataURL("image/gif"),b.insertAfter(this),c("body").addClass("disable-gif")}catch(e){return console.log("Can’t disable GIF-animation in development mode")}})}),f=null,presentation.onSlide(function(a){var c;c=a.find(".animate-hover");if(c.length)return f=b(3e3,function(){return c.toggleClass("hovered")})}),presentation.onClose(function(){return clearInterval(f)})})}.call(this),function(){presentation.slide("origin",function(a,b,c){var d,e,f;return e=b("mark"),d=b(".cube"),f="-"+presentation.prefix()+"-perspective-origin",c.every(100,function(){return e.text(d.css(f))})})}.call(this);
+    </script>
+  </body>
+</html>
