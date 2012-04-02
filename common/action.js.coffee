@@ -1,4 +1,5 @@
 after = (ms, fn) -> setTimeout(fn, ms)
+every = (ms, fn) -> setInterval(fn, ms)
 
 # Удобства для написания скриптов слайдов
 
@@ -38,11 +39,13 @@ jQuery ($) ->
   # Перехватываем переключение между слайдами
 
   slideCallbacks = jQuery.Callbacks()
+  closeCallbacks = jQuery.Callbacks()
   listCallbacks  = jQuery.Callbacks()
   listMode       = false
   currentSlide   = null
 
   urlChanged = ->
+    closeCallbacks.fire()
     if location.search == '?full'
       listMode = false
       if currentSlide != location.hash
@@ -65,6 +68,7 @@ jQuery ($) ->
   $(window).on('hashchange', urlChanged)
 
   presentation.onSlide = (callback) -> slideCallbacks.add(callback)
+  presentation.onClose = (callback) ->  listCallbacks.add(callback)
   presentation.onList  = (callback) ->  listCallbacks.add(callback)
 
   # Включение/выключение 3D-режима
@@ -98,3 +102,15 @@ jQuery ($) ->
         $('body').addClass('disable-gif')
       catch error
         console.log("Can’t disable GIF-animation in development mode")
+
+  # Анимируем автоматическоке наведение мышки на пример
+
+  hovering = null
+
+  presentation.onSlide (slide) ->
+    hover = slide.find('.animate-hover')
+    if hover.length
+      hovering = every 3000, -> hover.toggleClass('hovered')
+
+  presentation.onClose ->
+    clearInterval(hovering)

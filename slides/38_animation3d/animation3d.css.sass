@@ -16,11 +16,11 @@
       top: 0
       left: 0
       +backface-visibility(hidden)
-      +prop-transition(transform, 1.4s, linear)
+      +prop-transition(transform, 1s, linear)
     .love
       display: block
       +rotateY(-180deg)
-    &:hover
+    &.hovered
       .hal9000
         +rotateY(180deg)
       .love

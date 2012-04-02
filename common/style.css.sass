@@ -279,3 +279,11 @@ body
     height: 130px
     em
       color: #0099cc
+.animate-hover
+  position: relative
+  &.hovered:after
+    left: 50%
+    bottom: -20px
+    position: absolute
+    content: ' '
+    +background-image("common/cursor.png")
