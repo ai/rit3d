@@ -4,7 +4,7 @@ gem 'rake'
 gem 'fssm'
 
 gem 'haml'
-gem 'compass', git: 'https://github.com/chriseppstein/compass.git'
+gem 'compass', '~> 0.13.alpha.0'
 gem 'animation'
 gem 'ceaser-easing'
 gem 'coffee-script'
