@@ -1,4 +1,4 @@
-presentation.slide 'origin', ($, $$, slide) ->
+presentation.slide 'perspective-origin', ($, $$, slide) ->
   example  = $$('mark')
   cube     = $$('.cube')
   prop     = "-#{presentation.prefix()}-perspective-origin"

@@ -1,0 +1,40 @@
+.slide.transform-origin-slide
+  h2
+    margin-bottom: 90px
+  .origin
+    position: relative
+    margin-bottom: 120px
+  .label
+    position: absolute
+    top: -38px
+    &.x
+      left: 351px
+      color: #0099cc
+    &.y
+      left: 424px
+      color: #9933cc
+    &.z
+      left: 478px
+      color: #cc0000
+  .example
+    position: absolute
+    left: 600px
+    top: -40px
+    .rotator
+      width: 132px
+      height: 132px
+      div
+        float: left
+        background: #669900
+        width: 43px
+        height: 43px
+        margin: 0 1px 1px 0
+
+.enabled3d .slide.transform-origin-slide.current
+  .example
+    +perspective(4000px)
+  .rotator
+    +animation(rotation 8s infinite linear)
+    +transform-style(preserve-3d)
+  .originX .rotator
+    +transform-origin(100% 50% 0)

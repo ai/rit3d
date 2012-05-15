@@ -1,4 +1,4 @@
-.slide.origin-slide
+.slide.perspective-origin-slide
   .cube
     position: absolute
     width: 200px
@@ -23,7 +23,7 @@
       display: inline-block
       width: 214px - 16px
 
-.enabled3d .slide.origin-slide
+.enabled3d .slide.perspective-origin-slide
   .cube
     +transform-style(preserve-3d)
     +perspective(200px)
@@ -51,7 +51,7 @@
     top: 100px
     +transform(rotateX(90deg) translateY(-100px))
 
-+keyframes(slide-origin-perspective)
++keyframes(slide-perspective-origin-perspective)
   from
     +perspective-origin(50% 50%)
   25%
