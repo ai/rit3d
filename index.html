@@ -2,7 +2,7 @@
 <html lang='ru '>
   <head>
     <meta charset='UTF-8'>
-    <title>Вращай, двигай, загибай — практика 3D в Вебе</title>
+    <title>Веб, теперь в 3D: Практика</title>
     <meta content='width=1274, user-scalable=no' name='viewport'>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans&amp;subset=latin,cyrillic' rel='stylesheet'>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:700&amp;subset=latin,cyrillic' rel='stylesheet'>
@@ -25,11 +25,11 @@
         margin: 0;
         padding: 0;
         border: 0;
-        font-size: 100%;
         font: inherit;
+        font-size: 100%;
         vertical-align: baseline; }
       
-      body {
+      html {
         line-height: 1; }
       
       ol, ul {
@@ -264,6 +264,7 @@
           -webkit-animation: none !important;
           -moz-animation: none !important;
           -ms-animation: none !important;
+          -o-animation: none !important;
           animation: none !important; }
       
       .disable-gif .list .slide .gif {
@@ -281,7 +282,7 @@
           transform: scale(0.25, 0.25); }
           .list .slide:before {
             width: 256px;
-            height: 160px;
+            height: 144px;
             -webkit-transform: scale(4, 4);
             -moz-transform: scale(4, 4);
             -ms-transform: scale(4, 4);
@@ -456,6 +457,7 @@
         -webkit-animation: monolith-rotating 6s infinite linear;
         -moz-animation: monolith-rotating 6s infinite linear;
         -ms-animation: monolith-rotating 6s infinite linear;
+        -o-animation: monolith-rotating 6s infinite linear;
         animation: monolith-rotating 6s infinite linear;
         -webkit-transform: rotateY(45deg);
         -moz-transform: rotateY(45deg);
@@ -486,6 +488,7 @@
           -webkit-animation: monolith-lightning 6s infinite linear -2.5s;
           -moz-animation: monolith-lightning 6s infinite linear -2.5s;
           -ms-animation: monolith-lightning 6s infinite linear -2.5s;
+          -o-animation: monolith-lightning 6s infinite linear -2.5s;
           animation: monolith-lightning 6s infinite linear -2.5s;
           background: #211817; }
         .enabled3d .slide.cover-slide.current .monolith .back {
@@ -497,6 +500,7 @@
           -webkit-animation: monolith-lightning 6s infinite linear 0.5s;
           -moz-animation: monolith-lightning 6s infinite linear 0.5s;
           -ms-animation: monolith-lightning 6s infinite linear 0.5s;
+          -o-animation: monolith-lightning 6s infinite linear 0.5s;
           animation: monolith-lightning 6s infinite linear 0.5s; }
         .enabled3d .slide.cover-slide.current .monolith .left, .enabled3d .slide.cover-slide.current .monolith .right {
           left: 45px;
@@ -511,6 +515,7 @@
           -webkit-animation: monolith-lightning 6s infinite linear -4s;
           -moz-animation: monolith-lightning 6s infinite linear -4s;
           -ms-animation: monolith-lightning 6s infinite linear -4s;
+          -o-animation: monolith-lightning 6s infinite linear -4s;
           animation: monolith-lightning 6s infinite linear -4s; }
         .enabled3d .slide.cover-slide.current .monolith .right {
           -webkit-transform: rotateY(90deg) translateZ(-60px);
@@ -521,6 +526,7 @@
           -webkit-animation: monolith-lightning 6s infinite linear -1s;
           -moz-animation: monolith-lightning 6s infinite linear -1s;
           -ms-animation: monolith-lightning 6s infinite linear -1s;
+          -o-animation: monolith-lightning 6s infinite linear -1s;
           animation: monolith-lightning 6s infinite linear -1s; }
         .enabled3d .slide.cover-slide.current .monolith .top, .enabled3d .slide.cover-slide.current .monolith .bottom {
           width: 100%;
@@ -785,7 +791,8 @@
       .slide.transform-slide mark {
         margin: 0; }
       .slide.transform-slide .prefixes code {
-        color: #999999; }
+        color: #999999;
+        font-size: 26px; }
       .slide.transform-slide em {
         color: black; }
       
@@ -943,6 +950,7 @@
         -webkit-animation: rotation 8s infinite linear;
         -moz-animation: rotation 8s infinite linear;
         -ms-animation: rotation 8s infinite linear;
+        -o-animation: rotation 8s infinite linear;
         animation: rotation 8s infinite linear;
         -webkit-transform-style: preserve-3d;
         -moz-transform-style: preserve-3d;
@@ -999,6 +1007,7 @@
         -webkit-animation: rotation 4s infinite linear;
         -moz-animation: rotation 4s infinite linear;
         -ms-animation: rotation 4s infinite linear;
+        -o-animation: rotation 4s infinite linear;
         animation: rotation 4s infinite linear; }
         .enabled3d .slide.backface-slide .rotator.hidden {
           -webkit-backface-visibility: hidden;
@@ -1006,6 +1015,61 @@
           -ms-backface-visibility: hidden;
           -o-backface-visibility: hidden;
           backface-visibility: hidden; }
+      
+      .slide.transform-origin-slide h2 {
+        margin-bottom: 90px; }
+      .slide.transform-origin-slide .origin {
+        position: relative;
+        margin-bottom: 120px; }
+      .slide.transform-origin-slide .label {
+        position: absolute;
+        top: -38px; }
+        .slide.transform-origin-slide .label.x {
+          left: 351px;
+          color: #0099cc; }
+        .slide.transform-origin-slide .label.y {
+          left: 424px;
+          color: #9933cc; }
+        .slide.transform-origin-slide .label.z {
+          left: 478px;
+          color: #cc0000; }
+      .slide.transform-origin-slide .example {
+        position: absolute;
+        left: 600px;
+        top: -40px; }
+        .slide.transform-origin-slide .example .rotator {
+          width: 132px;
+          height: 132px; }
+          .slide.transform-origin-slide .example .rotator div {
+            float: left;
+            background: #669900;
+            width: 43px;
+            height: 43px;
+            margin: 0 1px 1px 0; }
+      
+      .enabled3d .slide.transform-origin-slide.current .example {
+        -webkit-perspective: 4000px;
+        -moz-perspective: 4000px;
+        -ms-perspective: 4000px;
+        -o-perspective: 4000px;
+        perspective: 4000px; }
+      .enabled3d .slide.transform-origin-slide.current .rotator {
+        -webkit-animation: rotation 8s infinite linear;
+        -moz-animation: rotation 8s infinite linear;
+        -ms-animation: rotation 8s infinite linear;
+        -o-animation: rotation 8s infinite linear;
+        animation: rotation 8s infinite linear;
+        -webkit-transform-style: preserve-3d;
+        -moz-transform-style: preserve-3d;
+        -ms-transform-style: preserve-3d;
+        -o-transform-style: preserve-3d;
+        transform-style: preserve-3d; }
+      .enabled3d .slide.transform-origin-slide.current .originX .rotator {
+        -webkit-transform-origin: 100% 50% 0 50%;
+        -moz-transform-origin: 100% 50% 0 50%;
+        -ms-transform-origin: 100% 50% 0 50%;
+        -o-transform-origin: 100% 50% 0 50%;
+        transform-origin: 100% 50% 0 50%; }
       
       .slide.perspective-slide h2 {
         margin-bottom: 70px; }
@@ -1045,14 +1109,14 @@
         -o-transform: rotateY(45deg);
         transform: rotateY(45deg); }
       
-      .slide.origin-slide .cube {
+      .slide.perspective-origin-slide .cube {
         position: absolute;
         width: 200px;
         height: 200px;
         top: 50%;
         left: 50%;
         margin: -100px 0 0 -100px; }
-      .slide.origin-slide .top, .slide.origin-slide .left, .slide.origin-slide .right, .slide.origin-slide .back, .slide.origin-slide .bottom {
+      .slide.perspective-origin-slide .top, .slide.perspective-origin-slide .left, .slide.perspective-origin-slide .right, .slide.perspective-origin-slide .back, .slide.perspective-origin-slide .bottom {
         top: 0;
         left: 0;
         position: absolute;
@@ -1060,16 +1124,16 @@
         height: 196px;
         border: 2px solid #669900;
         background: rgba(102, 153, 0, 0.2); }
-      .slide.origin-slide .left, .slide.origin-slide .right, .slide.origin-slide .bottom, .slide.origin-slide .back {
+      .slide.perspective-origin-slide .left, .slide.perspective-origin-slide .right, .slide.perspective-origin-slide .bottom, .slide.perspective-origin-slide .back {
         display: none; }
-      .slide.origin-slide .code {
+      .slide.perspective-origin-slide .code {
         margin-top: 325px;
         text-align: center; }
-        .slide.origin-slide .code mark {
+        .slide.perspective-origin-slide .code mark {
           display: inline-block;
           width: 198px; }
       
-      .enabled3d .slide.origin-slide .cube {
+      .enabled3d .slide.perspective-origin-slide .cube {
         -webkit-transform-style: preserve-3d;
         -moz-transform-style: preserve-3d;
         -ms-transform-style: preserve-3d;
@@ -1088,10 +1152,11 @@
         -webkit-animation: slide-origin-perspective 4s infinite linear;
         -moz-animation: slide-origin-perspective 4s infinite linear;
         -ms-animation: slide-origin-perspective 4s infinite linear;
+        -o-animation: slide-origin-perspective 4s infinite linear;
         animation: slide-origin-perspective 4s infinite linear; }
-      .enabled3d .slide.origin-slide .top, .enabled3d .slide.origin-slide .left, .enabled3d .slide.origin-slide .right, .enabled3d .slide.origin-slide .bottom, .enabled3d .slide.origin-slide .back {
+      .enabled3d .slide.perspective-origin-slide .top, .enabled3d .slide.perspective-origin-slide .left, .enabled3d .slide.perspective-origin-slide .right, .enabled3d .slide.perspective-origin-slide .bottom, .enabled3d .slide.perspective-origin-slide .back {
         display: block; }
-      .enabled3d .slide.origin-slide .back {
+      .enabled3d .slide.perspective-origin-slide .back {
         top: 0;
         left: 0;
         width: 196px;
@@ -1102,28 +1167,28 @@
         -ms-transform: translateZ(-200px);
         -o-transform: translateZ(-200px);
         transform: translateZ(-200px); }
-      .enabled3d .slide.origin-slide .left {
+      .enabled3d .slide.perspective-origin-slide .left {
         left: -100px;
         -webkit-transform: rotateY(90deg) translateX(100px);
         -moz-transform: rotateY(90deg) translateX(100px);
         -ms-transform: rotateY(90deg) translateX(100px);
         -o-transform: rotateY(90deg) translateX(100px);
         transform: rotateY(90deg) translateX(100px); }
-      .enabled3d .slide.origin-slide .right {
+      .enabled3d .slide.perspective-origin-slide .right {
         left: 100px;
         -webkit-transform: rotateY(90deg) translateX(100px);
         -moz-transform: rotateY(90deg) translateX(100px);
         -ms-transform: rotateY(90deg) translateX(100px);
         -o-transform: rotateY(90deg) translateX(100px);
         transform: rotateY(90deg) translateX(100px); }
-      .enabled3d .slide.origin-slide .top {
+      .enabled3d .slide.perspective-origin-slide .top {
         top: -100px;
         -webkit-transform: rotateX(90deg) translateY(-100px);
         -moz-transform: rotateX(90deg) translateY(-100px);
         -ms-transform: rotateX(90deg) translateY(-100px);
         -o-transform: rotateX(90deg) translateY(-100px);
         transform: rotateX(90deg) translateY(-100px); }
-      .enabled3d .slide.origin-slide .bottom {
+      .enabled3d .slide.perspective-origin-slide .bottom {
         top: 100px;
         -webkit-transform: rotateX(90deg) translateY(-100px);
         -moz-transform: rotateX(90deg) translateY(-100px);
@@ -1131,7 +1196,7 @@
         -o-transform: rotateX(90deg) translateY(-100px);
         transform: rotateX(90deg) translateY(-100px); }
       
-      @-moz-keyframes slide-origin-perspective {
+      @-moz-keyframes slide-perspective-origin-perspective {
         from {
           -moz-perspective-origin: 50% 50%;
           perspective-origin: 50% 50%; }
@@ -1148,7 +1213,7 @@
           -moz-perspective-origin: 50% 50%;
           perspective-origin: 50% 50%; } }
       
-      @-webkit-keyframes slide-origin-perspective {
+      @-webkit-keyframes slide-perspective-origin-perspective {
         from {
           -webkit-perspective-origin: 50% 50%;
           perspective-origin: 50% 50%; }
@@ -1165,7 +1230,7 @@
           -webkit-perspective-origin: 50% 50%;
           perspective-origin: 50% 50%; } }
       
-      @-o-keyframes slide-origin-perspective {
+      @-o-keyframes slide-perspective-origin-perspective {
         from {
           -o-perspective-origin: 50% 50%;
           perspective-origin: 50% 50%; }
@@ -1182,7 +1247,7 @@
           -o-perspective-origin: 50% 50%;
           perspective-origin: 50% 50%; } }
       
-      @-ms-keyframes slide-origin-perspective {
+      @-ms-keyframes slide-perspective-origin-perspective {
         from {
           -ms-perspective-origin: 50% 50%;
           perspective-origin: 50% 50%; }
@@ -1199,7 +1264,7 @@
           -ms-perspective-origin: 50% 50%;
           perspective-origin: 50% 50%; } }
       
-      @keyframes slide-origin-perspective {
+      @keyframes slide-perspective-origin-perspective {
         from {
           perspective-origin: 50% 50%; }
       
@@ -1479,7 +1544,7 @@
           margin-top: -30px;
           width: 216px;
           height: 216px;
-          background: url('slides/49_end/qr.png') no-repeat;
+          background: url('slides/51_end/qr.png') no-repeat;
           -webkit-transform: scale(0.7, 0.7);
           -moz-transform: scale(0.7, 0.7);
           -ms-transform: scale(0.7, 0.7);
@@ -1491,19 +1556,19 @@
         right: 35px;
         width: 150px;
         height: 139px;
-        background: url('slides/49_end/logo.png') no-repeat; }
+        background: url('slides/51_end/logo.png') no-repeat; }
     </style>
   </head>
   <body class='list'>
     <header class='caption'>
-      <h1>Вращай, двигай, загибай — практика 3D в Вебе</h1>
+      <h1>Веб, теперь в 3D: Практика</h1>
       <p>
         <a href="http://sitnik.ru/">Андрей Ситник</a>,
         <a href="evilmartians.ru">Злые марсиане</a>
       </p>
     </header>
     <section class='cover cover-slide slide use3d' id='1'>
-      <h2>Вращай, двигай, загибай — практика 3D в Вебе</h2>
+      <h2>Веб, теперь в 3D: Практика</h2>
       <img src="slides/01_cover/space.jpg" class="cover" alt="" /><div class='orbit'>
         <div class='monolith'>
           <div class='top'></div>
@@ -1729,13 +1794,13 @@
     </section>
     <section class='slide transform-slide' id='21'>
       <h2>CSS Transforms</h2>
-      <pre><code>transform: <mark>команда</mark> <mark>команда</mark> …;</code>
-      <div class='prefixes'>
+      <pre><div class='prefixes'>
         <code><em>-o-</em>transform: команда команда …;</code>
         <code><em>-ms-</em>transform: команда команда …;</code>
         <code><em>-moz-</em>transform: команда команда …;</code>
         <code><em>-webkit-</em>transform: команда команда …;</code>
-      </div></pre>
+      </div>
+      <code>transform: <mark>команда</mark> <mark>команда</mark> …;</code></pre>
     </section>
     <section class='slide transform2d-slide' id='22'>
       <h2>CSS 2D Transforms</h2>
@@ -1919,7 +1984,45 @@
         <code>backface-visibility: hidden</code>
       </div>
     </section>
-    <section class='perspective-slide slide use3d' id='27'>
+    <section class='slide transform-origin-slide use3d' id='27'>
+      <h2>Центр трансформации</h2>
+      <div class='origin'>
+        <div class='example originNo'>
+          <div class='rotator'>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+        <code>transform-origin: 50% 50% 0</code>
+        <div class='label x'>x</div>
+        <div class='label y'>y</div>
+        <div class='label z'>z</div>
+      </div>
+      <div class='origin'>
+        <div class='example originX'>
+          <div class='rotator'>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+        <code>transform-origin: <mark>100%</mark> 50% 0</code>
+      </div>
+    </section>
+    <section class='perspective-slide slide use3d' id='28'>
       <h2>Перспектива</h2>
       <div class='perspective'>
         <div class='example big'>
@@ -1956,7 +2059,7 @@
         <code>transform: rotateY(45deg)</code></pre>
       </div>
     </section>
-    <section class='origin-slide slide use3d' id='28'>
+    <section class='perspective-origin-slide slide use3d' id='29'>
       <h2>Положение перспективы</h2>
       <div class='cube'>
         <div class='top'></div>
@@ -1969,7 +2072,7 @@
         <code>perspective-origin: <mark>50% 50%</mark></code>
       </div>
     </section>
-    <section class='slide style-slide' id='29'>
+    <section class='slide style-slide' id='30'>
       <h2>Статус потомков</h2>
       <p>
         Нужно выставить
@@ -1978,11 +2081,11 @@
         (<nobr>по-умолчанию, <code>flat</code></nobr>)
       </p>
     </section>
-    <section class='cover part3-slide slide' id='30'>
+    <section class='cover part3-slide slide' id='31'>
       <h2>Часть 3. Практика</h2>
-      <img src="slides/30_part3/work.jpg" class="cover" alt="" />
+      <img src="slides/31_part3/work.jpg" class="cover" alt="" />
     </section>
-    <section class='download-slide slide' id='31'>
+    <section class='download-slide slide' id='32'>
       <h2>Скачать как учебник</h2>
       <p>
         Повторите шаги практики дома на своих проектах.
@@ -1990,9 +2093,9 @@
       <p>
         <a href='http://evl.ms/rit3d'>evl.ms/rit3d</a>
       </p>
-      <img src="slides/31_download/qr.png" alt="QR-код со ссылкой на загрузку" />
+      <img src="slides/32_download/qr.png" alt="QR-код со ссылкой на загрузку" />
     </section>
-    <section class='slide task-slide' id='32'>
+    <section class='slide task-slide' id='33'>
       <h2>Задача</h2>
       <p>При наведении перевернуть фотографию и показать оборот</p>
       <div class='rotate'>↺</div>
@@ -2004,7 +2107,7 @@
         </div>
       </div>
     </section>
-    <section class='detect-slide slide' id='33'>
+    <section class='detect-slide slide' id='34'>
       <h2>Шаг 1. Определяем поддержку 3D</h2>
       <p>
         Поддержка 3D зависит не только от браузера, но и от видеокарты →
@@ -2014,7 +2117,7 @@
       <pre><code><mark>.csstransforms3d</mark> .task { … }</code></pre>
       <pre><code>if ( Modernizr.<mark>csstransforms3d</mark> ) { … }</code></pre>
     </section>
-    <section class='compass-slide slide' id='34'>
+    <section class='compass-slide slide' id='35'>
       <h2>Шаг 2. Боремся с префиксами. Sass и Compass</h2>
       <pre class='sass'><code>.task</code>
       <code>  +rotateY(180deg)</code>
@@ -2031,7 +2134,7 @@
       <code>  -o-transition: all 1s;</code>
       <code>  transition: all 1s;</code></pre>
     </section>
-    <section class='slide states-slide use3d' id='35'>
+    <section class='slide states-slide use3d' id='36'>
       <h2>Шаг 3. Устанавливаем состояния</h2>
       <pre><code>.task .hal9000, .task .love</code>
       <code>  +backface-visibility(hidden)</code>
@@ -2049,7 +2152,7 @@
         </div>
       </div>
     </section>
-    <section class='jquery-slide slide' id='36'>
+    <section class='jquery-slide slide' id='37'>
       <h2>jQuery и 3D-анимация</h2>
       <p>
         Устанавливаем расширение
@@ -2057,7 +2160,7 @@
       </p>
       <pre><code>hal9000.animate({ rotateY: 0 }, 600);</code></pre>
     </section>
-    <section class='slide transition-slide' id='37'>
+    <section class='slide transition-slide' id='38'>
       <h2>Почему CSS Transitions лучше для анимаций</h2>
       <ul>
         <li>
@@ -2074,7 +2177,7 @@
         </li>
       </ul>
     </section>
-    <section class='animation3d-slide slide use3d' id='38'>
+    <section class='animation3d-slide slide use3d' id='39'>
       <h2>Шаг 4. Добавляем анимации</h2>
       <pre><code>.task .hal9000, .task .love</code>
       <code>  +transition(all 1s linear)</code></pre>
@@ -2086,14 +2189,14 @@
         </div>
       </div>
     </section>
-    <section class='light-slide slide' id='39'>
+    <section class='light-slide slide' id='40'>
       <h2>Шаг 5. Свет</h2>
       <pre><code>.task .love, .task:hover .hal9000</code>
       <code>  <mark>background-color: #ccc</mark></code>
       <code>.task:hover .love, .task .hal9000</code>
       <code>  <mark>background-color: white</mark></code></pre>
     </section>
-    <section class='easing-slide slide' id='40'>
+    <section class='easing-slide slide' id='41'>
       <h2>Шаг 6. Easing-функция</h2>
       <ol>
         <li>
@@ -2116,7 +2219,7 @@
         </li>
       </ol>
     </section>
-    <section class='compare-slide slide use3d' id='41'>
+    <section class='compare-slide slide use3d' id='42'>
       <h2>Сравниваем улучшения</h2>
       <p>
         Без улучшений
@@ -2142,7 +2245,7 @@
         </div>
       </div>
     </section>
-    <section class='degradation-slide slide' id='42'>
+    <section class='degradation-slide slide' id='43'>
       <h2>Шаг 7. Старые браузеры</h2>
       <pre><code><mark>.no-csstransforms3d</mark> .task .love</code>
       <code>  display: none</code>
@@ -2151,11 +2254,11 @@
       <code><mark>.no-csstransforms3d</mark> .love</code>
       <code>  display: block</code></pre>
     </section>
-    <section class='cover part4-slide slide' id='43'>
+    <section class='cover part4-slide slide' id='44'>
       <h2>Часть 4. Будущее</h2>
-      <img src="slides/43_part4/future.jpg" class="cover" alt="" />
+      <img src="slides/44_part4/future.jpg" class="cover" alt="" />
     </section>
-    <section class='slide webgl-slide' id='44'>
+    <section class='slide webgl-slide' id='45'>
       <h2>WebGL</h2>
       <p>
         WebGL — передача низкоуровневых OpenGL-комманд видеокарте
@@ -2168,7 +2271,7 @@
         CSS 3D Transforms: анимации, эффекты с обычной страницей.
       </p>
     </section>
-    <section class='gldemos-slide slide' id='45'>
+    <section class='gldemos-slide slide' id='46'>
       <h2>Примеры WebGL</h2>
       <ul>
         <li>
@@ -2193,19 +2296,19 @@
         </li>
       </ul>
     </section>
-    <section class='shaders-slide slide' id='46'>
+    <section class='shaders-slide slide' id='47'>
       <h2>Шейдеры из CSS-фильтров</h2>
       <p>
         Можно будет указывать, как изгибать любой блок
       </p>
-      <img src="slides/45_shaders/shaders.jpg" alt="" />
+      <img src="slides/47_shaders/shaders.jpg" alt="" />
     </section>
-    <section class='shadersdemo-slide slide' id='47'>
+    <section class='shadersdemo-slide slide' id='48'>
       <h2>Пример шейдеров</h2>
       <p>Обычный HTML-блок Google Maps и немного шейдеров:</p>
-      <img src="slides/46_shadersdemo/map.png" alt="" />
+      <img src="slides/48_shadersdemo/map.png" alt="" />
     </section>
-    <section class='slide webcl-slide' id='48'>
+    <section class='slide webcl-slide' id='49'>
       <h2>WebCL</h2>
       <p>
         На некоторых задачах видеокарта в несколько сот раз быстрее процессора.
@@ -2214,14 +2317,14 @@
         WebCL позволяет производить такие вычисления на видеокарте из JavaScript.
       </p>
     </section>
-    <section class='cover japans-slide slide' id='49'>
+    <section class='cover japans-slide slide' id='50'>
       <h2>Японцы ждут тебя в прекрасном мире 3D</h2>
-      <img src="slides/48_japans/japans.gif" class="cover gif" alt="" />
+      <img src="slides/50_japans/japans.gif" class="cover gif" alt="" />
     </section>
-    <section class='cover end-slide slide' id='50'>
+    <section class='cover end-slide slide' id='51'>
       <h2>Вопросы</h2>
-      <img src="slides/49_end/end.jpg" class="cover" alt="" /><div class='download'>
-        <a href='evl.ms/rit3d'>evl.ms/rit3d</a>
+      <img src="slides/51_end/end.jpg" class="cover" alt="" /><div class='download'>
+        <a href='http://evl.ms/rit3d'>evl.ms/rit3d</a>
         <div class='qr'></div>
       </div>
       <div class='logo'></div>
@@ -2230,7 +2333,7 @@
       <div></div>
     </div>
     <script>
-      (function(){function i(){var a=Math.max(b.clientWidth/window.innerWidth,b.clientHeight/window.innerHeight);return"scale("+1/a+")"}function j(a){b.style.WebkitTransform=a,b.style.MozTransform=a,b.style.msTransform=a,b.style.OTransform=a,b.style.transform=a}function k(){b.classList.remove("list"),b.classList.add("full"),j(i())}function l(){b.classList.remove("full"),b.classList.add("list"),j("none")}function m(){var b,c=e.length,d=a.hash.substr(1);for(b=0;b<c;++b)if(d===e[b].id)return b;return-1}function n(a){if(-1===a)return;var b=document.getElementById(e[a].id);null!=b&&window.scrollTo(0,b.offsetTop)}function o(){return"full"!==a.search.substr(1)}function p(a){return 0>a?e.length-1:e.length<=a?0:a}function q(a){if(null===d)return;d.style.width=(100/(e.length-1)*p(a)).toFixed(2)+"%"}function r(a){var b,c=e.length,d;a=p(a);for(b=0;b<c;++b)d=document.getElementById(e[b].id),b<a?(d.classList.remove("current"),d.classList.add("passed")):b>a?(d.classList.remove("passed"),d.classList.remove("current")):(d.classList.remove("passed"),d.classList.add("current"))}function s(a){return"#"+e[p(a)].id}function t(b){a.hash=s(b),o()||(q(b),r(b))}function u(a){var b=a;while("BODY"!==b.nodeName&&"HTML"!==b.nodeName){if(b.classList.contains("slide"))return b.id;b=b.parentNode}return""}function v(b){var c=u(b.target);""!==c&&o()&&(b.preventDefault(),a.hash="#"+c,history.replaceState(null,null,a.pathname+"?full#"+c),k(),q(m()),r(m()),w(m()))}function w(a){a=p(a),clearTimeout(f);if(e[a].hasTiming){var b=document.getElementById(e[a].id).dataset.timing.split(":");b=parseInt(b[0])*60*1e3+parseInt(b[1])*1e3,f=setTimeout(function(){t(a+1),w(a+1)},b)}}function x(a){if(!0!==e[a].hasInnerNavigation)return-1;var b=document.getElementById(e[a].id).querySelectorAll(".next:not(.active)"),c;return 0!==b.length?(c=b[0],c.classList.add("active"),b.length-1):-1}var a=window.location,b=document.body,c=document.querySelectorAll(".slide"),d=document.querySelector("div.progress div"),e=[],f,g=c.length,h;for(h=0;h<g;h++)c[h].id||(c[h].id=h+1),e.push({id:c[h].id,hasInnerNavigation:null!==c[h].querySelector(".next"),hasTiming:null!=c[h].dataset.timing});window.addEventListener("DOMContentLoaded",function(){o()||(-1===m()&&history.replaceState(null,null,a.pathname+"?full"+s(0)),k(),q(m()),r(m()),w(m()))},!1),window.addEventListener("popstate",function(a){o()?(l(),n(m())):k()},!1),window.addEventListener("resize",function(a){o()||j(i())},!1),document.addEventListener("keydown",function(b){if(b.altKey||b.ctrlKey||b.metaKey)return;var c=m(),d=!0;switch(b.which){case 116:case 13:o()&&-1!==c&&(b.preventDefault(),history.pushState(null,null,a.pathname+"?full"+s(c)),k(),q(c),r(c),w(c));break;case 27:o()||(b.preventDefault(),history.pushState(null,null,a.pathname+s(c)),l(),n(c));break;case 33:case 38:case 37:case 72:case 75:b.preventDefault(),c--,t(c);break;case 34:case 40:case 39:case 76:case 74:b.preventDefault(),o()?d=!0:d=!e[c].hasInnerNavigation||-1===x(c);if(-1===c||d)c++,t(c),o()||w(c);break;case 36:b.preventDefault(),c=0,t(c);break;case 35:b.preventDefault(),c=e.length-1,t(c);break;case 9:case 32:b.preventDefault(),c+=b.shiftKey?-1:1,t(c);break;default:}},!1),document.addEventListener("click",v,!1),document.addEventListener("touchend",v,!1),document.addEventListener("touchstart",function(a){if(!o()){var b=m(),c=a.touches[0].pageX;c>window.innerWidth/2?b++:b--,t(b)}},!1),document.addEventListener("touchmove",function(a){o()||a.preventDefault()},!1)})(),function(){var a,b;a=function(a,b){return setTimeout(b,a)},b=function(a,b){return setInterval(b,a)},window.presentation={slide:function(a,b){return jQuery(function(){var c,d;return d=$(".slide."+a+"-slide"),d.open=function(b){return presentation.onSlide(function(c){if(c.hasClass(""+a+"-slide"))return b()})},d.close=function(b){return presentation.onList(b),presentation.onSlide(function(c){if(!c.hasClass(""+a+"-slide"))return b()})},d.every=function(a,b){return d.open(function(){return d.watcher=setInterval(b,100)}),d.close(function(){if(d.watcher)return clearInterval(d.watcher)})},c=function(a){return $(a,d)},b($,c,d)})},prefix:function(){if($.browser.mozilla)return"moz";if($.browser.webkit)return"webkit";if($.browser.opera)return"o";if($.browser.msie)return"ms"}},jQuery(function(c){var d,e,f,g,h,i,j,k,l,m,n,o,p,q;c("a[href^=http]").attr({target:"_blank"}),l=jQuery.Callbacks(),d=jQuery.Callbacks(),g=jQuery.Callbacks(),h=!1,e=null,m=function(){d.fire();if(location.search==="?full"){h=!1;if(e!==location.hash)return e=location.hash,l.fire(c(location.hash))}else{e=null;if(!h)return h=!0,g.fire()}},k={},q=["pushState","replaceState"],n=function(a){return k[a]=history[a],history[a]=function(){return k[a].apply(history,arguments),m()}};for(o=0,p=q.length;o<p;o++)i=q[o],n(i);return c(window).on("popstate",m),c(window).on("hashchange",m),presentation.onSlide=function(a){return l.add(a)},presentation.onClose=function(a){return g.add(a)},presentation.onList=function(a){return g.add(a)},j=!1,presentation.onSlide(function(a){return a.hasClass("use3d")?c("body").addClass("enabled3d"):c("body").removeClass("enabled3d")}),presentation.onList(function(){return c("body").removeClass("enabled3d")}),a(500,function(){return c("img.gif").each(function(){var a,b,d;d=c(this),a=document.createElement("canvas"),a.width=this.width,a.height=this.height,a.getContext("2d").drawImage(this,0,0,a.width,a.height),b=c("<img />").attr({"class":d.attr("class")}).removeClass("gif").addClass("disabled-gif");try{return b[0].src=a.toDataURL("image/gif"),b.insertAfter(this),c("body").addClass("disable-gif")}catch(e){return console.log("Can’t disable GIF-animation in development mode")}})}),f=null,presentation.onSlide(function(a){var c;c=a.find(".animate-hover");if(c.length)return f=b(3e3,function(){return c.toggleClass("hovered")})}),presentation.onClose(function(){return clearInterval(f)})})}.call(this),function(){presentation.slide("origin",function(a,b,c){var d,e,f;return e=b("mark"),d=b(".cube"),f="-"+presentation.prefix()+"-perspective-origin",c.every(100,function(){return e.text(d.css(f))})})}.call(this);
+      (function(){function i(){var a=Math.max(b.clientWidth/window.innerWidth,b.clientHeight/window.innerHeight);return"scale("+1/a+")"}function j(a){b.style.WebkitTransform=a,b.style.MozTransform=a,b.style.msTransform=a,b.style.OTransform=a,b.style.transform=a}function k(){b.classList.remove("list"),b.classList.add("full"),j(i())}function l(){b.classList.remove("full"),b.classList.add("list"),j("none")}function m(){var b,c=e.length,d=a.hash.substr(1);for(b=0;b<c;++b)if(d===e[b].id)return b;return-1}function n(a){if(-1===a)return;var b=document.getElementById(e[a].id);null!=b&&window.scrollTo(0,b.offsetTop)}function o(){return"full"!==a.search.substr(1)}function p(a){return 0>a?e.length-1:e.length<=a?0:a}function q(a){if(null===d)return;d.style.width=(100/(e.length-1)*p(a)).toFixed(2)+"%"}function r(a){var b,c=e.length,d;a=p(a);for(b=0;b<c;++b)d=document.getElementById(e[b].id),b<a?(d.classList.remove("current"),d.classList.add("passed")):b>a?(d.classList.remove("passed"),d.classList.remove("current")):(d.classList.remove("passed"),d.classList.add("current"))}function s(a){return"#"+e[p(a)].id}function t(b){a.hash=s(b),o()||(q(b),r(b))}function u(a){var b=a;while("BODY"!==b.nodeName&&"HTML"!==b.nodeName){if(b.classList.contains("slide"))return b.id;b=b.parentNode}return""}function v(b){var c=u(b.target);""!==c&&o()&&(b.preventDefault(),a.hash="#"+c,history.replaceState(null,null,a.pathname+"?full#"+c),k(),q(m()),r(m()),w(m()))}function w(a){a=p(a),clearTimeout(f);if(e[a].hasTiming){var b=document.getElementById(e[a].id).dataset.timing.split(":");b=parseInt(b[0])*60*1e3+parseInt(b[1])*1e3,f=setTimeout(function(){t(a+1),w(a+1)},b)}}function x(a){if(!0!==e[a].hasInnerNavigation)return-1;var b=document.getElementById(e[a].id).querySelectorAll(".next:not(.active)"),c;return 0!==b.length?(c=b[0],c.classList.add("active"),b.length-1):-1}var a=window.location,b=document.body,c=document.querySelectorAll(".slide"),d=document.querySelector("div.progress div"),e=[],f,g=c.length,h;for(h=0;h<g;h++)c[h].id||(c[h].id=h+1),e.push({id:c[h].id,hasInnerNavigation:null!==c[h].querySelector(".next"),hasTiming:null!=c[h].dataset.timing});window.addEventListener("DOMContentLoaded",function(){o()||(-1===m()&&history.replaceState(null,null,a.pathname+"?full"+s(0)),k(),q(m()),r(m()),w(m()))},!1),window.addEventListener("popstate",function(a){o()?(l(),n(m())):k()},!1),window.addEventListener("resize",function(a){o()||j(i())},!1),document.addEventListener("keydown",function(b){if(b.altKey||b.ctrlKey||b.metaKey)return;var c=m(),d=!0;switch(b.which){case 116:case 13:o()&&-1!==c&&(b.preventDefault(),history.pushState(null,null,a.pathname+"?full"+s(c)),k(),q(c),r(c),w(c));break;case 27:o()||(b.preventDefault(),history.pushState(null,null,a.pathname+s(c)),l(),n(c));break;case 33:case 38:case 37:case 72:case 75:b.preventDefault(),c--,t(c);break;case 34:case 40:case 39:case 76:case 74:b.preventDefault(),o()?d=!0:d=!e[c].hasInnerNavigation||-1===x(c);if(-1===c||d)c++,t(c),o()||w(c);break;case 36:b.preventDefault(),c=0,t(c);break;case 35:b.preventDefault(),c=e.length-1,t(c);break;case 9:case 32:b.preventDefault(),c+=b.shiftKey?-1:1,t(c);break;default:}},!1),document.addEventListener("click",v,!1),document.addEventListener("touchend",v,!1),document.addEventListener("touchstart",function(a){if(!o()){var b=m(),c=a.touches[0].pageX;c>window.innerWidth/2?b++:b--,t(b)}},!1),document.addEventListener("touchmove",function(a){o()||a.preventDefault()},!1)})(),function(){var a,b;a=function(a,b){return setTimeout(b,a)},b=function(a,b){return setInterval(b,a)},window.presentation={slide:function(a,b){return jQuery(function(){var c,d;return d=$(".slide."+a+"-slide"),d.open=function(b){return presentation.onSlide(function(c){if(c.hasClass(""+a+"-slide"))return b()})},d.close=function(b){return presentation.onList(b),presentation.onSlide(function(c){if(!c.hasClass(""+a+"-slide"))return b()})},d.every=function(a,b){return d.open(function(){return d.watcher=setInterval(b,100)}),d.close(function(){if(d.watcher)return clearInterval(d.watcher)})},c=function(a){return $(a,d)},b($,c,d)})},prefix:function(){if($.browser.mozilla)return"moz";if($.browser.webkit)return"webkit";if($.browser.opera)return"o";if($.browser.msie)return"ms"}},jQuery(function(a){var c,d,e,f,g,h,i,j,k,l,m,n,o;a("a[href^=http]").attr({target:"_blank"}),j=jQuery.Callbacks(),e=jQuery.Callbacks(),f=!1,c=null,k=function(){if(location.search==="?full"){f=!1;if(c!==location.hash)return c=location.hash,j.fire(a(location.hash))}else{c=null;if(!f)return f=!0,e.fire()}},i={},o=["pushState","replaceState"],l=function(a){return i[a]=history[a],history[a]=function(){return i[a].apply(history,arguments),k()}};for(m=0,n=o.length;m<n;m++)g=o[m],l(g);return a(window).on("popstate",k),a(window).on("hashchange",k),presentation.onSlide=function(a){return j.add(a)},presentation.onList=function(a){return e.add(a)},h=!1,presentation.onSlide(function(b){return b.hasClass("use3d")?a("body").addClass("enabled3d"):a("body").removeClass("enabled3d")}),presentation.onList(function(){return a("body").removeClass("enabled3d")}),a("img.gif").each(function(){var b;return b=a(this),b.load(function(){var c,d;c=document.createElement("canvas"),c.width=b.width(),c.height=b.height(),c.getContext("2d").drawImage(b[0],0,0,c.width,c.height),d=a("<img />").attr({"class":b.attr("class")}).removeClass("gif").addClass("disabled-gif");try{return d[0].src=c.toDataURL("image/gif"),d.insertAfter(b),a("body").addClass("disable-gif")}catch(e){return console.log("Can’t disable GIF-animation in development mode")}})}),d=null,presentation.onSlide(function(a){var c,e;d&&(clearInterval(d),d=!1),c=a.find(".animate-hover");if(c.length)return e=a,d=b(3e3,function(){return c.toggleClass("hovered")})}),presentation.onList(function(){if(d)return clearInterval(d),d=!1})})}.call(this),function(){presentation.slide("perspective-origin",function(a,b,c){var d,e,f;return e=b("mark"),d=b(".cube"),f="-"+presentation.prefix()+"-perspective-origin",c.every(100,function(){return e.text(d.css(f))})})}.call(this);
     </script>
   </body>
 </html>
